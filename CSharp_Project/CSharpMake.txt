@@ -1,0 +1,4 @@
+// Init
+dotnet new console
+// 실행
+dotnet run

@@ -1,0 +1,15 @@
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.AssemblyInfoInputs.cache
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.AssemblyInfo.cs
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.csproj.CoreCompileInputs.cache
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/bin/Debug/net6.0/CSharp_Project
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/bin/Debug/net6.0/CSharp_Project.deps.json
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/bin/Debug/net6.0/CSharp_Project.runtimeconfig.json
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/bin/Debug/net6.0/CSharp_Project.dll
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/bin/Debug/net6.0/CSharp_Project.pdb
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.dll
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/refint/CSharp_Project.dll
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.pdb
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.genruntimeconfig.cache
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/ref/CSharp_Project.dll
+/Users/kimhakdong/Documents/Dev/vsc Projects/CSharp_Project/obj/Debug/net6.0/CSharp_Project.sourcelink.json
