@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/kimhakdong/Documents/GitHub/vsc_BaekJoon/CSharp_Project/CSharp_Project.csproj": {}
+    "C:\\Users\\hakdong\\Documents\\GitHub\\vsc_BaekJoon\\CSharp_Project\\CSharp_Project.csproj": {}
   },
   "projects": {
-    "/Users/kimhakdong/Documents/GitHub/vsc_BaekJoon/CSharp_Project/CSharp_Project.csproj": {
+    "C:\\Users\\hakdong\\Documents\\GitHub\\vsc_BaekJoon\\CSharp_Project\\CSharp_Project.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/kimhakdong/Documents/GitHub/vsc_BaekJoon/CSharp_Project/CSharp_Project.csproj",
+        "projectUniqueName": "C:\\Users\\hakdong\\Documents\\GitHub\\vsc_BaekJoon\\CSharp_Project\\CSharp_Project.csproj",
         "projectName": "CSharp_Project",
-        "projectPath": "/Users/kimhakdong/Documents/GitHub/vsc_BaekJoon/CSharp_Project/CSharp_Project.csproj",
-        "packagesPath": "/Users/kimhakdong/.nuget/packages/",
-        "outputPath": "/Users/kimhakdong/Documents/GitHub/vsc_BaekJoon/CSharp_Project/obj/",
+        "projectPath": "C:\\Users\\hakdong\\Documents\\GitHub\\vsc_BaekJoon\\CSharp_Project\\CSharp_Project.csproj",
+        "packagesPath": "C:\\Users\\hakdong\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\hakdong\\Documents\\GitHub\\vsc_BaekJoon\\CSharp_Project\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/kimhakdong/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\hakdong\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -59,7 +59,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.308/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

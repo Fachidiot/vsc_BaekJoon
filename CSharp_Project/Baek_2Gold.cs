@@ -9,9 +9,34 @@ class Baek_2Gold
     static StreamReader sr = new StreamReader(Console.OpenStandardInput());
     static StringBuilder sb = new StringBuilder();
 
-    // public static void Main(string[] args)
-    // {
-    //     sw.Close();
-    //     sr.Close();
-    // }
+    ~Baek_2Gold()
+    {
+        sr.Close();
+        sw.Close();
+    }
+
+    #region Gold I
+    // I    name
+
+    #endregion
+
+    #region Gold II
+    // II   name
+
+    #endregion
+
+    #region Gold III
+    // III  name
+
+    #endregion
+
+    #region Gold IV
+    // IV   name
+
+    #endregion
+
+    #region Gold V
+    // V    name
+
+    #endregion
 }

@@ -10,19 +10,15 @@ class Baek_0Bronze
     static StreamReader sr = new StreamReader(Console.OpenStandardInput());
     static StringBuilder sb = new StringBuilder();
 
-    public static void Main(string[] args)
+    ~Baek_0Bronze()
     {
-        Baek2997();
-
-        sw.Close();
         sr.Close();
+        sw.Close();
     }
-
-
 
     #region Bronze I
     // I    ISBN
-    static void Baek14626()
+    static public void Baek14626()
     {
         string input = Console.ReadLine();
         int m = input[input.Length - 1] - '0';
@@ -61,7 +57,7 @@ class Baek_0Bronze
         }
     }
     // I    일곱 난쟁이
-    static void Baek2109()
+    static public void Baek2109()
     {
         List<int> dwarfs = new List<int>();
         int sum = 0, num;
@@ -100,12 +96,34 @@ class Baek_0Bronze
         }
 
     }
+    // I    명령 프롬프트
+    static public void Baek1032()
+    {
+        int N = int.Parse(Console.ReadLine());
+        string path = "";
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Console.ReadLine();
+            for (int j = 0; j < input.Length; ++j)
+            {
+                if (path.Length <= j)
+                    path += input[j];
+                else if (path[j] != input[j])
+                {
+                    string front = path.Substring(0, j);
+                    string back = path.Substring(j + 1, path.Length - (j + 1));
+                    path = front + "?" + back;
+                }
+            }
+        }
+        Console.WriteLine(path);
+    }
 
     #endregion
 
     #region Bronze II
     // II   블랙잭
-    static void Baek2798()
+    static public void Baek2798()
     {
         var NM = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int N = NM[0], M = NM[1], max = 0;
@@ -127,7 +145,7 @@ class Baek_0Bronze
         sw.WriteLine(max);
     }
     // II   분해합
-    static void Baek2231()
+    static public void Baek2231()
     {
         int N = int.Parse(sr.ReadLine()), min = int.MaxValue;
         for (int i = 1; i < N; ++i)
@@ -148,7 +166,7 @@ class Baek_0Bronze
 
     #region Bronze III
     // III  곱셈
-    static void Baek2588()
+    static public void Baek2588()
     {
         int a = int.Parse(sr.ReadLine());
         int b = int.Parse(sr.ReadLine());
@@ -159,7 +177,7 @@ class Baek_0Bronze
         sw.Write(sb);
     }
     // III  알람시계
-    static void Baek2884()
+    static public void Baek2884()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int H = input[0], M = input[1] - 45;
@@ -174,7 +192,7 @@ class Baek_0Bronze
         sw.WriteLine($"{H} {M}");
     }
     // III  네 번째 수
-    static void Baek2997()
+    static public void Baek2997()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
 
@@ -204,14 +222,14 @@ class Baek_0Bronze
 
     #region Bronze IV
     // IV   과자
-    static void Baek10156()
+    static public void Baek10156()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int K = input[0], N = input[1], M = input[2];
         sw.WriteLine(K * N > M ? K * N - M : 0);
     }
     // IV   가희와 방어율 무시
-    static void Baek25238()
+    static public void Baek25238()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         float defense = input[0], ignore = input[1];
@@ -224,7 +242,7 @@ class Baek_0Bronze
 
     #region Bronze V
     // V    R2
-    static void Baek3046()
+    static public void Baek3046()
     {   // (R1 + R2) / 2 = S    ->  R2 = 2S - R1
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int R1 = input[0], S = input[1], R2;
@@ -232,7 +250,7 @@ class Baek_0Bronze
         sw.WriteLine(R2);
     }
     // V    구구단
-    static void Baek2739()
+    static public void Baek2739()
     {
         int N = int.Parse(sr.ReadLine());
         for (int i = 1; i < 10; ++i)
@@ -240,7 +258,7 @@ class Baek_0Bronze
         sw.WriteLine(sb);
     }
     // V    인공지능 시계
-    static void Baek2530()
+    static public void Baek2530()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int A = input[0], B = input[1], C = input[2];
@@ -263,14 +281,14 @@ class Baek_0Bronze
         sw.WriteLine("{0} {1} {2}", A, B, C);
     }
     // V    이상한 기호
-    static void Baek15964()
+    static public void Baek15964()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int A = input[0], B = input[1];
         sw.WriteLine((A + B) * (A - B));
     }
     // V    나머지
-    static void Baek10430()
+    static public void Baek10430()
     {
         //첫째 줄에 (A+B)%C, 둘째 줄에 ((A%C) + (B%C))%C, 셋째 줄에 (A×B)%C, 넷째 줄에 ((A%C) × (B%C))%C를 출력한다.
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
@@ -279,40 +297,40 @@ class Baek_0Bronze
                         ((A * B) % C).ToString() + '\n' + (((A % C) * (B % C)) % C).ToString());
     }
     // V    제리와 톰
-    static void Baek16430()
+    static public void Baek16430()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int A = input[0], B = input[1];
         sw.WriteLine(B - A + " " + B);
     }
     // V    ??!
-    static void Baek10926()
+    static public void Baek10926()
     {
         var id = sr.ReadLine();
         sw.WriteLine(id + "??!");
     }
     // V    스위트콘 가격 구하기
-    static void Baek30030()
+    static public void Baek30030()
     {   // A : 10배수, 원가 B : 11배수, 부가가치세 포함 가격
         int B = int.Parse(sr.ReadLine());
         sw.WriteLine((B / 11) * 10);
     }
     // V    꼬마 정민이
-    static void Baek11382()
+    static public void Baek11382()
     {
         long[] inputs = Array.ConvertAll(sr.ReadLine().Split(), long.Parse);
         long A = inputs[0], B = inputs[1], C = inputs[2];
         sw.WriteLine((A + B + C).ToString());
     }
     // V    ASCII 코드
-    static void Baek11654()
+    static public void Baek11654()
     {
         char input = sr.ReadLine()[0];
         int ascii = input;
         sw.WriteLine(ascii);
     }
     // V    검증수
-    static void Baek2475()
+    static public void Baek2475()
     {
         int[] input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int result = 0;
@@ -323,7 +341,7 @@ class Baek_0Bronze
         sw.WriteLine(result.ToString());
     }
     // V    사칙연산
-    static void Baek10869()
+    static public void Baek10869()
     {
         int[] input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         sb.Append((input[0] + input[1]).ToString() + '\n');
@@ -334,38 +352,38 @@ class Baek_0Bronze
         sw.WriteLine(sb);
     }
     // V    A+B
-    static void Baek1000()
+    static public void Baek1000()
     {
         int[] input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         sw.WriteLine((input[0] + input[1]).ToString());
     }
     // V    A-B
-    static void Baek1001()
+    static public void Baek1001()
     {
         int[] input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         sw.WriteLine((input[0] - input[1]).ToString());
     }
     // V    두 수 비교하기
-    static void Baek1330()
+    static public void Baek1330()
     {
         var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int A = input[0], B = input[1];
         sw.WriteLine(A > B ? '>' : A < B ? '<' : "==");
     }
     // V    시험 성적
-    static void Baek9498()
+    static public void Baek9498()
     {
         int grade = int.Parse(sr.ReadLine());
         sw.WriteLine(grade >= 90 ? "A" : grade >= 80 ? "B" : grade >= 70 ? "C" : grade >= 60 ? "D" : "F");
     }
     // V    윤년
-    static void Baek2753()
+    static public void Baek2753()
     {   // 윤년은 연도가 4의 배수이면서, 100의 배수가 아닐 때 또는 400의 배수일 때이다.
         int year = int.Parse(sr.ReadLine());
         sw.WriteLine(year % 4 == 0 && (year % 100 != 0 || year % 400 == 0) ? 1 : 0);
     }
     // V    사분면 고르기
-    static void Baek14681()
+    static public void Baek14681()
     {   // x > 0 & y > 0 : 1 / x < 0 & y > 0 : 2 / x < 0 & y < 0 : 3 / x > 0 & y < 0 : 4
         bool x = sr.ReadLine()[0] != '-' ? true : false;    // x > 0 ? true : false
         bool y = sr.ReadLine()[0] != '-' ? true : false;    // y > 0 ? true : false
@@ -373,4 +391,21 @@ class Baek_0Bronze
     }
 
     #endregion
+
+    // 부록
+    public void StarPiramid()
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            for (int j = 5 - i; j > 0; --j)
+            {
+                Console.Write(' ');
+            }
+            for (int j = 0; j < 1 + (i * 2); ++j)
+            {
+                Console.Write("*");
+            }
+            Console.WriteLine();
+        }
+    }
 }

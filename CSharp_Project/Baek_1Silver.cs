@@ -11,15 +11,11 @@ class Baek_1Silver
     static StreamReader sr = new StreamReader(Console.OpenStandardInput());
     static StringBuilder sb = new StringBuilder();
 
-    // public static void Main(string[] args)
-    // {
-    //     Baek7568();
-
-    //     sw.Close();
-    //     sr.Close();
-    // }
-
-
+    ~Baek_1Silver()
+    {
+        sr.Close();
+        sw.Close();
+    }
 
     #region Silver I
     // I    미로 탐색
@@ -294,6 +290,29 @@ class Baek_1Silver
             IsSquare(x + length / 2, y + length / 2, length / 2);
         }
 
+    }
+    // II   마인크래프트
+    static void Baek18111()
+    {
+        var NMB = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
+        int N = NMB[0], M = NMB[1], B = NMB[2], min = int.MaxValue, minCount = 0;
+        int[,] map = new int[N, M];
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
+            for (int j = 0; j < M; ++j)
+            {
+                if (min == input[j])
+                    minCount++;
+                map[i, j] = input[j];
+                if (min > input[j])
+                {
+                    min = input[j];
+                    minCount = 1;
+                }
+            }
+        }
+        // if (minCount > M * N * 2)
     }
 
     #endregion
