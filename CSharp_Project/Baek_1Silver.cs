@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.WebSockets;
 using System.Text;
+using System.Text.Json;
 
 class Baek_1Silver
 {
@@ -19,7 +20,7 @@ class Baek_1Silver
 
     #region Silver I
     // I    미로 탐색
-    static void Baek2178()
+    static public void Baek2178()
     {   // 0,0 => N,M
         var NM = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int N = NM[0], M = NM[1];
@@ -36,7 +37,7 @@ class Baek_1Silver
         BFS_2178(1, 1, graph);
         sw.WriteLine(graph[N, M]);
     }
-    static void BFS_2178(int x, int y, bool[,] graph)
+    static public void BFS_2178(int x, int y, bool[,] graph)
     {
         int[] xDir = { 1, -1, 0, 0 };   // 아래, 위, 오, 왼
         int[] yDir = { 0, 0, 1, -1 };
@@ -61,7 +62,7 @@ class Baek_1Silver
         }
     }
     // I    정수삼각형
-    static void Baek1932()
+    static public void Baek1932()
     {
         int N = int.Parse(sr.ReadLine());
         int[,] dp = new int[N, N];
@@ -88,7 +89,7 @@ class Baek_1Silver
         }
         sw.WriteLine(max.ToString());
     }
-    static void Baek1932Plus()
+    static public void Baek1932Plus()
     {
         int N = int.Parse(sr.ReadLine());
         int[][] dp = new int[N][];
@@ -117,7 +118,7 @@ class Baek_1Silver
         }
         sw.WriteLine(max.ToString());
     }
-    static void Baek1932Again()
+    static public void Baek1932Again()
     {
         int N = int.Parse(sr.ReadLine());
         int[,] dp = new int[N, N];
@@ -149,7 +150,7 @@ class Baek_1Silver
 
     #region  Silber II
     // II   연결 요소의 개수
-    static void Baek11724()
+    static public void Baek11724()
     {
         int[] NM = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int N = NM[0], M = NM[1];   // 정점:N, 간선:M
@@ -178,7 +179,7 @@ class Baek_1Silver
         }
         sw.WriteLine(result.ToString());
     }
-    static void DFS_11724(List<int>[] graph, int now, bool[] visited)
+    static public void DFS_11724(List<int>[] graph, int now, bool[] visited)
     {
         visited[now] = true;
         foreach (int next in graph[now])
@@ -188,7 +189,7 @@ class Baek_1Silver
             DFS_11724(graph, next, visited);
         }
     }
-    static void BFS_11724(List<int>[] graph, int start, bool[] visited)
+    static public void BFS_11724(List<int>[] graph, int start, bool[] visited)
     {
         visited[start] = true;
 
@@ -207,7 +208,7 @@ class Baek_1Silver
         }
     }
     // II   최대 힙
-    static void Baek11279()
+    static public void Baek11279()
     {
         // 우선순위 큐 | 1인자 : 값 / 2인자 : 우선순위
         PriorityQueue<int, int> queue = new PriorityQueue<int, int>(new decComparer());
@@ -237,7 +238,7 @@ class Baek_1Silver
         }
     }
     // II   색종이 만들기
-    static void Baek2630()
+    static public void Baek2630()
     {
         // main
         int N = int.Parse(Console.ReadLine());
@@ -257,7 +258,7 @@ class Baek_1Silver
     }
     static byte[,] sqaure;
     static int white = 0, blue = 0;
-    static void IsSquare(int x, int y, int length)
+    static public void IsSquare(int x, int y, int length)
     {
         byte first = sqaure[x, y];
         bool isSquare = true;
@@ -291,35 +292,86 @@ class Baek_1Silver
         }
 
     }
-    // II   마인크래프트
-    static void Baek18111()
+    // II   마인크래프트    (Need Again)
+    static public void Baek18111()
     {
-        var NMB = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
-        int N = NMB[0], M = NMB[1], B = NMB[2], min = int.MaxValue, minCount = 0;
+        var NMB = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = NMB[0], M = NMB[1], B = NMB[2];
+
+        int max = 0, min = 256, maxCount = 0;
         int[,] map = new int[N, M];
         for (int i = 0; i < N; ++i)
         {
-            var input = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
             for (int j = 0; j < M; ++j)
             {
-                if (min == input[j])
-                    minCount++;
-                map[i, j] = input[j];
-                if (min > input[j])
+                if (max == input[j]) maxCount++;
+                if (max < input[j])
                 {
-                    min = input[j];
-                    minCount = 1;
+                    max = input[j];
+                    maxCount = 1;
                 }
+                if (min > input[j])
+                    min = input[j];
+                map[i, j] = input[j];
             }
         }
-        // if (minCount > M * N * 2)
+
+        int minCount = N * M - maxCount;
+        if (min == max) // 작업이 필요하지 않은 경우
+            Console.WriteLine($"0 {max}");
+        else if (B >= minCount * (max - min))
+        {   // 필요한 블럭개수가 충분한 경우 (불필요한 블럭 파괴가 필요없는 경우)
+            if (maxCount >= M * N / 3)
+                Console.WriteLine($"{minCount} {max}"); // 블럭을 설치만 할 경우
+            else
+                Console.WriteLine($"{maxCount * 2} {min}"); // 블럭을 제거만 할 경우
+        }
+        else
+        {   // 블럭을 파거나 설치하는 작업량의 최소시간과 높이 구하기.
+            int sum = 0;
+            for (int i = 0; i < N; ++i)
+            {
+                for (int j = 0; j < M; ++j)
+                {
+                    if (max > map[i, j])    // 최대값 제외의 합 구하기
+                        sum += map[i, j];
+                }
+            }
+
+            int height = (max + B + sum) / (2 * minCount);
+            int time = ((max - height) * maxCount * 2) + (height - min) * minCount;
+            Console.WriteLine($"{time} {height}");
+        }
     }
 
     #endregion
 
     #region Silver III
+
+    // III  퇴사        (Need Again)
+    public static void Baek14501()
+    {
+        int N = int.Parse(Console.ReadLine());
+        int[][] list = new int[N][];
+        int[] dp = new int[N + 1];
+
+        for (int i = 0; i < N; ++i)
+            list[i] = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        for (int i = 0; i < N; ++i)
+        {
+            if (i + list[i][0] <= N)
+                dp[i + list[i][0]] = Math.Max(dp[i + list[i][0]], list[i][1] + dp[i]);
+
+            dp[i + 1] = Math.Max(dp[i + 1], dp[i]);
+        }
+
+        Console.WriteLine($"{dp[N]}");
+    }
+
     // III  체스판 다시 칠하기
-    static void Baek1018()
+    static public void Baek1018()
     {
         var NM = Array.ConvertAll(sr.ReadLine().Split(), int.Parse);
         int N = NM[0], M = NM[1], min = int.MaxValue;
@@ -379,7 +431,7 @@ class Baek_1Silver
 
     #region Silver IV
     // IV   한수    
-    static void Baek1065()
+    static public void Baek1065()
     {
         int N = int.Parse(sr.ReadLine());
         if (N < 100)
@@ -402,7 +454,7 @@ class Baek_1Silver
 
     #region Silver V
     // V    셀프 넘버
-    static void Baek4673()
+    static public void Baek4673()
     {   // 1 3 5 7 9 20 31 42 53 64...
         for (int i = 1; i <= 10000; ++i)
         {   // self num인지 판단.
@@ -428,7 +480,7 @@ class Baek_1Silver
         }
     }
     // V    영화감독 숌
-    static void Baek1436()
+    static public void Baek1436()
     {
         int N = int.Parse(sr.ReadLine()), start = 666, count = 0;
         while (count < N)
@@ -453,7 +505,7 @@ class Baek_1Silver
         sw.WriteLine(start - 1);
     }
     // V    덩치
-    static void Baek7568()
+    static public void Baek7568()
     {
         int N = int.Parse(sr.ReadLine());
         (int, int)[] p = new (int, int)[N];

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 class Baek_0Bronze
@@ -118,6 +119,22 @@ class Baek_0Bronze
         }
         Console.WriteLine(path);
     }
+    static public void Baek1032Plus()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Console.ReadLine();
+            for (int j = 0; j < input.Length; ++j)
+            {
+                if (sb.Length <= j)
+                    sb.Append(input[j]);
+                else if (sb[j] != input[j])
+                    sb.Remove(j, 1).Insert(j, "?");
+            }
+        }
+        Console.WriteLine(sb);
+    }
 
     #endregion
 
@@ -165,6 +182,20 @@ class Baek_0Bronze
     #endregion
 
     #region Bronze III
+
+    // III  경기 결과
+    public static void Baek5523()
+    {
+        int N = int.Parse(Console.ReadLine()), aWin = 0, bWin = 0;
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int A = input[0], B = input[1];
+            aWin += A > B ? 1 : 0;
+            bWin += A < B ? 1 : 0;
+        }
+        Console.WriteLine($"{aWin} {bWin}");
+    }
     // III  곱셈
     static public void Baek2588()
     {
@@ -221,6 +252,18 @@ class Baek_0Bronze
     #endregion
 
     #region Bronze IV
+
+    // IV   평균 점수
+    public static void Baek10039()
+    {
+        int sum = 0;
+        for (int i = 0; i < 5; ++i)
+        {
+            int input = int.Parse(Console.ReadLine());
+            sum += input > 40 ? input : 40;
+        }
+        Console.WriteLine($"{sum / 5}");
+    }
     // IV   과자
     static public void Baek10156()
     {
@@ -241,6 +284,36 @@ class Baek_0Bronze
     #endregion
 
     #region Bronze V
+
+    // V    A+B-7
+    public static void Baek11021()
+    {
+        int T = int.Parse(Console.ReadLine());
+        for (int i = 0; i < T; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            sb.Append($"Case #{i + 1}: {input[0] + input[1]}\n");
+        }
+        Console.WriteLine(sb);
+    }
+    // V    기찍 N
+    public static void Baek2742()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = N; i > 0; --i)
+            sb.Append($"{i}\n");
+
+        Console.WriteLine(sb);
+    }
+    // V    N 찍기
+    public static void Baek2741()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 1; i <= N; ++i)
+            sb.Append($"{i}\n");
+
+        Console.WriteLine(sb);
+    }
     // V    R2
     static public void Baek3046()
     {   // (R1 + R2) / 2 = S    ->  R2 = 2S - R1
