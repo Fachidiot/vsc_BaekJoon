@@ -20,18 +20,5 @@ DS_Store
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #cmake-build-*
-CSharp_Project/bin/Debug/net9.0/CSharp_Project.dll
-CSharp_Project/bin/Debug/net9.0/CSharp_Project.pdb
-CSharp_Project/obj/CSharp_Project.csproj.nuget.dgspec.json
-CSharp_Project/obj/CSharp_Project.csproj.nuget.g.props
-CSharp_Project/obj/Debug/net9.0/CSharp_Project.AssemblyInfo.cs
-CSharp_Project/obj/Debug/net9.0/CSharp_Project.AssemblyInfoInputs.cache
-CSharp_Project/obj/Debug/net9.0/CSharp_Project.assets.cache
-CSharp_Project/obj/Debug/net9.0/CSharp_Project.dll
-CSharp_Project/obj/Debug/net9.0/CSharp_Project.GeneratedMSBuildEditorConfig.editorconfig
-CSharp_Project/obj/Debug/net9.0/CSharp_Project.pdb
-CSharp_Project/obj/Debug/net9.0/CSharp_Project.sourcelink.json
-CSharp_Project/obj/Debug/net9.0/ref/CSharp_Project.dll
-CSharp_Project/obj/Debug/net9.0/refint/CSharp_Project.dll
-CSharp_Project/obj/project.assets.json
-CSharp_Project/obj/project.nuget.cache
+/CSharp_Project/bin/*
+/CSharp_Project/obj/*

@@ -371,6 +371,21 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    개
+    public static void Baek10172()
+    {
+        // |\_/|
+        // |q p|   /}
+        // ( 0 )"""\
+        // |"^"`    |
+        // ||_/=\\__|
+
+        Console.WriteLine("|\\_/|");
+        Console.WriteLine("|q p|   /}");
+        Console.WriteLine("( 0 )\"\"\"\\");
+        Console.WriteLine("|\"^\"`    |");
+        Console.WriteLine("||_/=\\\\__|");
+    }
     // V    별 찍기1
     public static void Baek2438()
     {

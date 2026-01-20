@@ -32,17 +32,21 @@ class Baek_2Gold
 
     #region Gold IV
 
-    // V    별 찍기10
-        public static void Baek2448()
+    // IV   별 찍기11
+    public static void Baek2448()
     {
-        int N = int.Parse(Console.ReadLine());
+        // int N = int.Parse(Console.ReadLine());
+        // test
+        int N = 24;
+
         for (int i = 0; i < N; ++i)
         {
-            for (int j = 0; j < N - i; ++j)
+            for (int j = 0; j < N - 1 - i; ++j)
                 sb.Append(' ');
+
             for (int j = 0; j < 1 + (i * 2); ++j)
-            {
-                if (Recursion2448(i, j))
+            {   // 피라미드 형식으로 출력
+                if (Recursion2448(i, j, N))
                     sb.Append('*');
                 else
                     sb.Append(' ');
@@ -51,18 +55,29 @@ class Baek_2Gold
         }
         Console.WriteLine(sb);
     }
-    static bool Recursion2448(int i, int j)
-    {   // 좌표가 2의 나머지가 1이라면 비우기.
-        if (i % 3 == 1 && j % 3 == 1)
-            return false;
-        /*
-        상위 좌표가 비워야하는 좌표인지 확인. (확인하는 이유 -> 아래 ex)
-        ex (1,1)인 경우 (1,1)은 나머지가 모두 1
-        ex (3,3) ~ (5,5)인 경우 (1,1)로 계산    (1,1)은 나머지가 모두 1
-        */
-        if (j > 1 && i > 1)
-            return Recursion2448(i / 3, j / 3);
-        return true;
+    static bool Recursion2448(int i, int j, int length)
+    {   // 길이가 제일 작은 삼각형 일때
+        if (length == 3)
+        {   // i와 j가 1일때만 공백
+            if (i == 1 && j == 1) return false;
+            return true;
+        }
+
+        // 길이가 긴 삼각형일때, 삼각형의 절반을 구함 48->24->12->6->3
+        int next = length / 2;
+        // 절반의 길이로 삼각형을 3부분으로 나누어 재귀실행
+
+        // 삼각형의 윗부분
+        if (i < next)
+            return Recursion2448(i, j, next);   // 절반의 길이의 같은 좌표로 재귀
+        // 삼각형의 왼쪽 아래 부분 
+        else if (j < 2 * (i - next) + 1)
+            return Recursion2448(i - next, j, next);    // 왼쪽 아래의 시작지점 좌표로 재귀
+        // 삼각형의 오른쪽 아래부분
+        else if (j >= length)
+            return Recursion2448(i - next, j - length, next);   // 오른쪽 아래의 시작지점 좌표로 재귀
+
+        return false;
     }
 
     #endregion
