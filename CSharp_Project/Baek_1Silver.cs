@@ -430,6 +430,26 @@ class Baek_1Silver
     #endregion
 
     #region Silver IV
+
+    // IV   설탕배달
+    public static void Baek2839()
+    {
+        int N = int.Parse(Console.ReadLine()), min = int.MaxValue;
+        if (N == 3)
+        {   // 예외처리
+            Console.WriteLine($"1");
+            return;
+        }
+        for (int i = 0; i < N / 2; ++i)
+        {
+            for (int j = 0; j < N / 2; ++j)
+            {
+                if (i * 5 + j * 3 == N)
+                    min = Math.Min(min, i + j);
+            }
+        }
+        Console.WriteLine($"{(min == int.MaxValue ? -1 : min)}");
+    }
     // IV   한수    
     static public void Baek1065()
     {

@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.CompilerServices;
+using System.Security.AccessControl;
 using System.Text;
 
 class Baek_0Bronze
@@ -183,6 +185,50 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  TGN
+    public static void Baek5063()
+    {   // r,e,c 광고x수익 / 광고o수익 / 광고비용
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            if (input[1] - input[2] < input[0])
+                Console.WriteLine($"do not advertise");
+            else if (input[1] - input[2] > input[0])
+                Console.WriteLine($"advertise");
+            else
+                Console.WriteLine($"does not matter");
+        }
+    }
+    // III  최댓값
+    public static void Baek2562()
+    {
+        int max = int.MinValue, index = -1;
+        for (int i = 0; i < 9; ++i)
+        {
+            var input = int.Parse(Console.ReadLine());
+            if (max < input)
+            {
+                max = input;
+                index = i + 1;
+            }
+        }
+        Console.WriteLine($"{max}\n{index}");
+    }
+    // III  최소, 최대
+    public static void Baek10818()
+    {
+        int N = int.Parse(Console.ReadLine()), min = int.MaxValue, max = int.MinValue;
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        for (int i = 0; i < N; ++i)
+        {
+            if (min > input[i])
+                min = input[i];
+            if (max < input[i])
+                max = input[i];
+        }
+        Console.WriteLine($"{min} {max}");
+    }
     // III  경기 결과
     public static void Baek5523()
     {
@@ -248,11 +294,51 @@ class Baek_0Bronze
         else
             Console.WriteLine(input[2] + minus);
     }
+    // III  별 찍기4
+    public static void Baek2441()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = 0; j < i; ++j)
+                sb.Append(' ');
+            for (int j = i; j < N; ++j)
+                sb.Append('*');
+            sb.Append('\n');
+        }
+        Console.WriteLine(sb);
+    }
 
     #endregion
 
     #region Bronze IV
 
+    // IV   별 찍기3
+    public static void Baek2440()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = i; j < N; ++j)
+                sb.Append('*');
+            sb.Append('\n');
+        }
+        Console.WriteLine(sb);
+    }
+    // IV   별 찍기2
+    public static void Baek2439()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = i + 1; j < N; ++j)
+                sb.Append(' ');
+            for (int j = 0; j < i + 1; ++j)
+                sb.Append('*');
+            sb.Append('\n');
+        }
+        Console.WriteLine(sb);
+    }
     // IV   평균 점수
     public static void Baek10039()
     {
@@ -285,6 +371,18 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    별 찍기1
+    public static void Baek2438()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = 0; j < i + 1; ++j)
+                sb.Append('*');
+            sb.Append('\n');
+        }
+        Console.WriteLine(sb);
+    }
     // V    A+B-7
     public static void Baek11021()
     {
@@ -466,6 +564,26 @@ class Baek_0Bronze
     #endregion
 
     // 부록
+    public static void DanguJang()
+    {
+        int N = int.Parse(Console.ReadLine());
+        for (int i = 0; i < N; ++i)
+        {
+            for (int j = 0; j < N; ++j)
+            {
+                if (i == j && i + j == N - 1)
+                    sb.Append('X');
+                else if (i + j == N - 1)
+                    sb.Append('/');
+                else if (i == j)
+                    sb.Append('\\');
+                else
+                    sb.Append('*');
+            }
+            sb.Append('\n');
+        }
+        Console.WriteLine(sb);
+    }
     public void StarPiramid()
     {
         for (int i = 0; i < 6; ++i)
