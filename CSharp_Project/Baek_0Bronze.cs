@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.CompilerServices;
-using System.Security.AccessControl;
+using System.Numerics;
 using System.Text;
 
 class Baek_0Bronze
@@ -185,6 +182,25 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  서울사이버대학을 다니고
+    public static void Baek30958()
+    {
+        int[] cnts = new int[26];
+        int N = int.Parse(Console.ReadLine()), max = 0;
+        var input = Console.ReadLine();
+        foreach (var alphabet in input)
+        {
+            if ('.' == alphabet || ',' == alphabet || ' ' == alphabet)
+                continue;
+            cnts[alphabet - 'a']++;
+        }
+        foreach (var cnt in cnts)
+        {
+            if (max < cnt)
+                max = cnt;
+        }
+        Console.WriteLine($"{max}");
+    }
     // III  TGN
     public static void Baek5063()
     {   // r,e,c 광고x수익 / 광고o수익 / 광고비용
@@ -313,6 +329,21 @@ class Baek_0Bronze
 
     #region Bronze IV
 
+    // IV   Pokemon Buddy
+    public static void Baek18691()
+    {
+        int T = int.Parse(Console.ReadLine());
+        for (int i = 0; i < T; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            if (input[1] >= input[2])
+            {
+                Console.WriteLine("0");
+                continue;
+            }
+            Console.WriteLine($"{(input[0] == 2 ? 3 : input[0] == 3 ? 5 : 1) * (input[2] - input[1])}");
+        }
+    }
     // IV   별 찍기3
     public static void Baek2440()
     {
@@ -398,7 +429,13 @@ class Baek_0Bronze
         }
         Console.WriteLine(sb);
     }
-    // V    A+B-7
+    // V    A+B -2
+    public static void Baek2558()
+    {
+        int A = int.Parse(Console.ReadLine()), B = int.Parse(Console.ReadLine());
+        Console.WriteLine($"{A + B}");
+    }
+    // V    A+B -7
     public static void Baek11021()
     {
         int T = int.Parse(Console.ReadLine());
@@ -575,10 +612,57 @@ class Baek_0Bronze
         bool y = sr.ReadLine()[0] != '-' ? true : false;    // y > 0 ? true : false
         sw.WriteLine(x && y ? 1 : !x && y ? 2 : !x && !y ? 3 : 4);
     }
+    // V    마이크로소프트 로고
+    public static void Baek5338()
+    {
+        //       _.-;;-._
+        //'-..-'|   ||   |
+        //'-..-'|_.-;;-._|
+        //'-..-'|   ||   |
+        //'-..-'|_.-''-._|
+        Console.WriteLine("       _.-;;-._");
+        Console.WriteLine("\'-..-\'|   ||   |");
+        Console.WriteLine("\'-..-\'|_.-;;-._|");
+        Console.WriteLine("\'-..-\'|   ||   |");
+        Console.WriteLine("\'-..-\'|_.-''-._|");
+    }
+    // V    긴자리 계산
+    public static void Baek2338()
+    {
+        BigInteger A = BigInteger.Parse(Console.ReadLine()), B = BigInteger.Parse(Console.ReadLine());
+        Console.WriteLine($"{A + B}\n{A - B}{A * B}");
+    }
+    // V    큰 수 (BIG)
+    public static void Baek14928()
+    {
+        BigInteger N = BigInteger.Parse(Console.ReadLine());
+        Console.WriteLine($"{N % 20000303}");
+    }
+    // V    가희와 4시간의 벽 1
+    public static void Baek32775()
+    {
+        int Sab = int.Parse(Console.ReadLine()), Fab = int.Parse(Console.ReadLine());
+
+        if (Sab <= Fab)
+        {
+            if (Sab == Fab && 240 < Sab)
+                Console.WriteLine("flight");
+            else
+                Console.WriteLine("high speed rail");
+        }
+        else
+            Console.WriteLine("flight");
+    }
+    // V    Conveyor Belt Sushi
+    public static void Baek32326()
+    {
+        int R = int.Parse(Console.ReadLine()), G = int.Parse(Console.ReadLine()), B = int.Parse(Console.ReadLine());
+        Console.WriteLine($"{R * 3 + G * 4 + B * 5}");
+    }
 
     #endregion
 
-    // 부록
+    #region 부록
     public static void DanguJang()
     {
         int N = int.Parse(Console.ReadLine());
@@ -599,6 +683,7 @@ class Baek_0Bronze
         }
         Console.WriteLine(sb);
     }
+
     public void StarPiramid()
     {
         for (int i = 0; i < 6; ++i)
@@ -614,4 +699,5 @@ class Baek_0Bronze
             Console.WriteLine();
         }
     }
+    #endregion
 }
