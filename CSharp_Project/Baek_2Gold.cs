@@ -35,28 +35,33 @@ class Baek_2Gold
     // IV   별 찍기11
     public static void Baek2448()
     {
-        // int N = int.Parse(Console.ReadLine());
-        // test
-        int N = 24;
+        int N = int.Parse(Console.ReadLine());
 
         for (int i = 0; i < N; ++i)
         {
-            for (int j = 0; j < N - 1 - i; ++j)
+            for (int j = 0; j < N - i - 1; ++j)
                 sb.Append(' ');
 
-            for (int j = 0; j < 1 + (i * 2); ++j)
+            for (int j = 0; j < 2 * i + 1; ++j)
             {   // 피라미드 형식으로 출력
                 if (Recursion2448(i, j, N))
                     sb.Append('*');
                 else
                     sb.Append(' ');
             }
+
+            for (int j = 0; j < N - i - 1; ++j)
+                sb.Append(' ');
+
             sb.Append('\n');
         }
-        Console.WriteLine(sb);
+        Console.Write(sb);
     }
     static bool Recursion2448(int i, int j, int length)
     {   // 길이가 제일 작은 삼각형 일때
+        //  *   (0,0)
+        // * *  (1,0) (1,1) (1,2)
+        //***** (2,0) (2,1) (2,2) (2,3) (2,4)
         if (length == 3)
         {   // i와 j가 1일때만 공백
             if (i == 1 && j == 1) return false;
@@ -64,19 +69,20 @@ class Baek_2Gold
         }
 
         // 길이가 긴 삼각형일때, 삼각형의 절반을 구함 48->24->12->6->3
-        int next = length / 2;
-        // 절반의 길이로 삼각형을 3부분으로 나누어 재귀실행
+        int half = length / 2;
+        // 절반의 길이로 삼각형을 3부분으로 나누어 재귀실행 -> 작은 삼각형으로 그리자
 
         // 삼각형의 윗부분
-        if (i < next)
-            return Recursion2448(i, j, next);   // 절반의 길이의 같은 좌표로 재귀
-        // 삼각형의 왼쪽 아래 부분 
-        else if (j < 2 * (i - next) + 1)
-            return Recursion2448(i - next, j, next);    // 왼쪽 아래의 시작지점 좌표로 재귀
-        // 삼각형의 오른쪽 아래부분
+        if (i < half)
+            return Recursion2448(i, j, half);   // 절반의 길이의 같은 좌표로 재귀
+        // // 삼각형의 아래 오른쪽부분
         else if (j >= length)
-            return Recursion2448(i - next, j - length, next);   // 오른쪽 아래의 시작지점 좌표로 재귀
+            return Recursion2448(i - half, j - length, half);   // i: 위로 / j: 왼쪽으로
+        // 삼각형의 아래 왼쪽부분
+        else if (j < 2 * (i - half) + 1)
+            return Recursion2448(i - half, j, half);    // i: 위로 / j: 그대로
 
+        // 나머지 부분은 모두 비워서 그리자
         return false;
     }
 
