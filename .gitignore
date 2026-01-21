@@ -10,18 +10,13 @@ compile_commands.json
 CTestTestfile.cmake
 _deps
 CMakeUserPresets.json
-/CSharp_Project/bin/*
-/CSharp_Project/obj/*
-/CSharp_Project/obj/Debug/*
-/CSharp_Project/bin/Debug/*
+
+# macOS 시스템 파일 (하위 폴더 포함 전체 무시)
+.DS_Store
+
+# C# 프로젝트 빌드 폴더 (하위 내용 전체 무시)
 /CSharp_Project/bin/
 /CSharp_Project/obj/
-/CSharp_Project/obj/Debug/
-/CSharp_Project/bin/Debug/
-*.exe
-*.pdb
-*.dll
-*.DS_Store
 
 # CLion
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
