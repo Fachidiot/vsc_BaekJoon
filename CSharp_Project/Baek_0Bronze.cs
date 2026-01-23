@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Numerics;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 class Baek_0Bronze
@@ -17,6 +20,25 @@ class Baek_0Bronze
     }
 
     #region Bronze I
+
+    // I    단어 뒤집기
+    static public void Baek9093()
+    {
+        int T = int.Parse(Console.ReadLine());
+        for (int i = 0; i < T; ++i)
+        {
+            var input = Console.ReadLine().Split();
+            for (int j = 0; j < input.Length; ++j)
+            {
+                for (int k = 0; k < input[j].Length; ++k)
+                    sb.Append(input[j][input[j].Length - k - 1]);
+                if (j < input.Length - 1)
+                    sb.Append(' ');
+            }
+            sb.Append('\n');
+        }
+        Console.WriteLine(sb);
+    }
     // I    ISBN
     static public void Baek14626()
     {
@@ -182,6 +204,47 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  J박스
+    public static void Baek5354()
+    {
+        int T = int.Parse(Console.ReadLine());
+        for (int i = 0; i < T; ++i)
+        {
+            int L = int.Parse(Console.ReadLine());
+            for (int x = 0; x < L; ++x)
+            {
+                for (int y = 0; y < L; ++y)
+                {
+                    if (x == 0 || x == L - 1 || y == 0 || y == L - 1)
+                        Console.Write($"#");
+                    else
+                        Console.Write($"J");
+                }
+                System.Console.WriteLine();
+            }
+        }
+    }
+    // III  삼각형과 세 변
+    public static void Baek5073()
+    {
+        while (true)
+        {
+            // 한번에 int로 변환, ConvertAll은 int[]을 리턴합니다.
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int a = input[0], b = input[1], c = input[2];
+            if (a == 0 || b == 0 || c == 0)
+                break;
+
+            if (a == b && b == c)   // a == b == c 일때.
+                Console.WriteLine("Equilateral");
+            else if (a >= b + c || b >= a + c || c >= a + b)   // 삼각형이 될수 없을때.
+                Console.WriteLine("Invalid");
+            else if (a == b || b == c || a == c)    // 두변의 길이는 같을때.
+                Console.WriteLine("Isosceles");
+            else
+                Console.WriteLine("Scalene");
+        }
+    }
     // III  서울사이버대학을 다니고
     public static void Baek30958()
     {

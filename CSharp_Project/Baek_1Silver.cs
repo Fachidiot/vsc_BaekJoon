@@ -428,6 +428,70 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   괄호
+    public static void Baek9012()
+    {
+        bool[] stack = new bool[50];
+        int T = int.Parse(Console.ReadLine());
+        for (int i = 0; i < T; ++i)
+        {
+            int count = 0;
+            var input = Console.ReadLine();
+            for (int j = 0; j < input.Length; ++j)
+            {
+                switch (input[j])
+                {
+                    case '(':
+                        // stack[count++] = true;
+                        count++;
+                        break;
+                    case ')':
+                        count--;
+                        break;
+                }
+            }
+            Console.WriteLine($"{(count == 0 ? "Yes" : "No")}");
+
+        }
+    }
+    // IV   스택
+    public static void Baek10828()
+    {
+        int N = int.Parse(Console.ReadLine()), count = 0;
+        int[] stack = new int[N];
+
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Console.ReadLine().Split();
+            if (input.Length > 1)   // push일때
+            {
+                stack[count++] = int.Parse(input[1]);
+            }
+            else
+            {
+                switch (input[0])
+                {
+                    case "top":
+                        sb.AppendLine($"{(count == 0 ? -1 : stack[count - 1])}");
+                        // Console.WriteLine($"{(count == 0 ? -1 : stack[count - 1])}");
+                        break;
+                    case "size":
+                        sb.AppendLine($"{count}");
+                        // Console.WriteLine($"{count}");
+                        break;
+                    case "empty":
+                        sb.AppendLine($"{(count == 0 ? 1 : 0)}");
+                        // Console.WriteLine($"{(count == 0 ? 1 : 0)}");
+                        break;
+                    case "pop":
+                        sb.AppendLine($"{(count == 0 ? -1 : stack[--count])}");
+                        // Console.WriteLine($"{(count == 0 ? -1 : stack[--count])}");
+                        break;
+                }
+            }
+        }
+        Console.WriteLine(sb);
+    }
     // IV   설탕배달
     public static void Baek2839()
     {
