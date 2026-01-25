@@ -146,6 +146,113 @@ class Baek_1Silver
     #endregion
 
     #region  Silber II
+
+    // II   에디터  (Need Again)
+    public static void Baek1406_TLE()
+    {
+        sb.Append(Console.ReadLine());
+        int M = int.Parse(Console.ReadLine()), cursor = sb.Length;
+        for (int i = 0; i < M; ++i)
+        {
+            var func = Console.ReadLine();
+            switch (func[0])
+            {
+                case 'L':
+                    if (cursor > 0)
+                        cursor--;
+                    break;
+                case 'D':
+                    if (cursor < sb.Length)
+                        cursor++;
+                    break;
+                case 'B':   // 0X1Y2Z3
+                    if (cursor == 0) continue;
+                    // 커서가 맨 앞이 아닐 경우만
+                    // input = input.ToString(0, cursor - 1) + input.ToString(cursor, input.Length - cursor);
+                    sb.Remove(cursor - 1, 1);
+                    cursor--;
+                    break;
+                case 'P':   // 0X1Y2Z3
+                    // input = input.ToString(0, cursor) + func[2] + input.ToString(cursor, input.Length - cursor);
+                    sb.Insert(cursor, func.Split()[1]);
+                    cursor++;
+                    break;
+            }
+        }
+        Console.WriteLine(sb);
+    }
+    public static void Baek1406()
+    {
+        string input = Console.ReadLine();
+        LinkedList<char> list = new LinkedList<char>();
+        for (int i = 0; i < input.Length; ++i)
+            list.AddLast(input[i]);
+        list.AddLast(' ');
+        int M = int.Parse(Console.ReadLine());
+        LinkedListNode<char> cursor = list.Last;
+        for (int i = 0; i < M; ++i)
+        {
+            var func = Console.ReadLine();
+            switch (func[0])
+            {
+                case 'L':
+                    if (null != cursor.Previous)
+                        cursor = cursor.Previous;
+                    break;
+                case 'D':
+                    if (null != cursor.Next)
+                        cursor = cursor.Next;
+                    break;
+                case 'B':
+                    if (null != cursor.Previous)
+                        list.Remove(cursor.Previous);
+                    break;
+                case 'P':
+                    list.AddBefore(cursor, func[2]);
+                    break;
+            }
+        }
+        foreach (var c in list)
+            sb.Append(c);
+        Console.WriteLine(sb);
+    }
+    // II   스택 수열
+    public static void Baek1874()
+    {
+        int N = int.Parse(Console.ReadLine());
+        int[] seq = new int[N];
+
+        Stack<int> stack = new Stack<int>();
+        for (int i = 0; i < N; ++i)
+            seq[i] = int.Parse(Console.ReadLine());
+
+        int index = 0, count = 0;
+        while (index < N)
+        {
+            if (stack.Count == 0)
+            {
+                stack.Push(++count);
+                sb.AppendLine("+");
+            }
+            if (stack.Peek() == seq[index])
+            {   // pop 실행
+                stack.Pop();
+                sb.AppendLine("-");
+                index++;
+            }
+            else
+            {   // push 실행
+                if (count == N)
+                {
+                    Console.WriteLine("NO");
+                    return;
+                }
+                stack.Push(++count);
+                sb.AppendLine("+");
+            }
+        }
+        Console.Write(sb);
+    }
     // II   연결 요소의 개수
     static public void Baek11724()
     {
@@ -428,29 +535,160 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   덱
+    public static void Baek10866()
+    {
+        int N = int.Parse(Console.ReadLine());
+        LinkedList<int> deque = new LinkedList<int>();
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Console.ReadLine().Split();
+            switch (input[0])
+            {
+                case "push_front":
+                    deque.AddFirst(int.Parse(input[1]));
+                    break;
+                case "push_back":
+                    deque.AddLast(int.Parse(input[1]));
+                    break;
+                case "pop_front":
+                    if (deque.Count == 0) sb.AppendLine("-1");
+                    else
+                    {
+                        sb.AppendLine($"{deque.First()}");
+                        deque.RemoveFirst();
+                    }
+                    break;
+                case "pop_back":
+                    if (deque.Count == 0) sb.AppendLine("-1");
+                    else
+                    {
+                        sb.AppendLine($"{deque.Last()}");
+                        deque.RemoveLast();
+                    }
+                    break;
+                case "size":
+                    sb.AppendLine($"{deque.Count()}");
+                    break;
+                case "empty":
+                    sb.AppendLine($"{(deque.Count == 0 ? 1 : 0)}");
+                    break;
+                case "front":
+                    sb.AppendLine($"{(deque.Count == 0 ? -1 : deque.First())}");
+                    break;
+                case "back":
+                    sb.AppendLine($"{(deque.Count == 0 ? -1 : deque.Last())}");
+                    break;
+            }
+        }
+        Console.Write(sb);
+    }
+    // IV   요세푸스 문제
+    public static void Baek1158()
+    {
+        var NM = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = NM[0], M = NM[1];
+        Josephus1158(N, M);
+    }
+    static void Josephus1158(int N, int K)
+    {   // 1 2 3 4 5 6 7
+        Queue<int> queue = new Queue<int>();
+        for (int i = 0; i < N; ++i)
+            queue.Enqueue(1 + i);
+
+        sb.Append('<');
+        int count = 0;
+        while (queue.Count > 0)
+        {
+            var front = queue.Dequeue();
+            count++;
+            if (0 == count % K)
+            {
+                if (queue.Count > 0)
+                    sb.Append($"{front}, ");
+                else
+                    sb.Append(front);
+            }
+            else
+                queue.Enqueue(front);
+        }
+        Console.WriteLine(sb.Append('>'));
+    }
+    // IV   큐
+    public static void Baek10845()
+    {
+        int N = int.Parse(Console.ReadLine());
+        int[] queue = new int[N];
+        int front = 0, back = 0;
+        for (int i = 0; i < N; ++i)
+        {
+            var input = Console.ReadLine().Split();
+            switch (input[0])
+            {
+                case "push":
+                    queue[back++] = int.Parse(input[1]);
+                    break;
+                case "pop":
+                    if (back - front == 0)
+                        sb.AppendLine("-1");
+                    else
+                        sb.AppendLine($"{queue[front++]}");
+                    break;
+                case "size":
+                    sb.AppendLine($"{back - front}");
+                    break;
+                case "empty":
+                    sb.AppendLine($"{(back - front == 0 ? 1 : 0)}");
+                    break;
+                case "front":
+                    if (back - front == 0)
+                        sb.AppendLine("-1");
+                    else
+                        sb.AppendLine($"{queue[front]}");
+                    break;
+                case "back":
+                    if (back - front == 0)
+                        sb.AppendLine("-1");
+                    else
+                        sb.AppendLine($"{queue[back - 1]}");
+                    break;
+            }
+        }
+        Console.Write(sb);
+    }
     // IV   괄호
     public static void Baek9012()
     {
-        bool[] stack = new bool[50];
         int T = int.Parse(Console.ReadLine());
         for (int i = 0; i < T; ++i)
         {
+            bool isTrue = true;
+            Stack<char> stack = new Stack<char>();
             int count = 0;
             var input = Console.ReadLine();
-            for (int j = 0; j < input.Length; ++j)
+            foreach (var symbol in input)
             {
-                switch (input[j])
+                if (stack.Count == 0)
                 {
-                    case '(':
-                        // stack[count++] = true;
-                        count++;
-                        break;
-                    case ')':
-                        count--;
-                        break;
+                    stack.Push(symbol);
+                    count++;
+                    continue;
                 }
+                if (symbol == '(')
+                {
+                    stack.Push('(');
+                    count++;
+                }
+                else if (stack.Peek() == '(')
+                {
+                    stack.Pop();
+                    count--;
+                }
+                else if (stack.Count == 0)
+                    isTrue = false;
             }
-            Console.WriteLine($"{(count == 0 ? "Yes" : "No")}");
+
+            Console.WriteLine($"{(count == 0 && isTrue ? "Yes" : "No")}");
 
         }
     }

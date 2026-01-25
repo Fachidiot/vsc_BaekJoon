@@ -465,6 +465,18 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    A+B -4
+    public static void Baek10951()
+    {
+        while (true)
+        {
+            var input = Console.ReadLine();
+            if (input == string.Empty)
+                break;
+            var nums = Array.ConvertAll(input.Split(), int.Parse);
+            Console.WriteLine($"{nums[0] + nums[1]}");
+        }
+    }
     // V    개
     public static void Baek10172()
     {

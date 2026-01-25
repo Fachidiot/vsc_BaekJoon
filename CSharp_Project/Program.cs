@@ -13,9 +13,9 @@ class Program
 {
     public static void Main(string[] args)
     {
-        // Baek_0Bronze.Baek9093();
+        // Baek_0Bronze.Baek10951();
 
-        Baek_1Silver.Baek9012();
+        Baek_1Silver.Baek10866();
 
         // Baek_2Gold.Baek2448();
     }
