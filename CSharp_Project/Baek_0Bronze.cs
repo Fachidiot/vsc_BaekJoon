@@ -204,6 +204,21 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  세탁소 사장 동혁
+    public static void Baek2720()
+    {
+        int T = int.Parse(Console.ReadLine());
+        while (T > 0)
+        {   // Quat:25 Dime:10 Nick:5 Peny:1    (단위:cent)
+            T--;
+            int Cent = int.Parse(Console.ReadLine());
+            int Quat = Cent / 25;
+            int Dime = Cent % 25 / 10;
+            int Nick = Cent % 25 % 10 / 5;
+            int Peny = Cent % 25 % 10 % 5;
+            Console.WriteLine($"{Quat} {Dime} {Nick} {Peny}");
+        }
+    }
     // III  J박스
     public static void Baek5354()
     {
@@ -392,6 +407,33 @@ class Baek_0Bronze
 
     #region Bronze IV
 
+    // IV   나는 행복합니다~
+    public static void Baek14652()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = input[0], M = input[1], K = input[2];
+
+        int x = K / M;  // x좌표값
+        int y = K % M;  // y좌표값
+        Console.WriteLine($"{x} {y}");
+    }
+    // IV   나이 계산하기
+    public static void Baek16199()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int byear = input[0], bmonth = input[1], bday = input[2];
+        input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int year = input[0], month = input[1], day = input[2];
+
+        int syear = year - byear;
+        int smonth = month - bmonth;
+        int sday = day - bday;
+
+        // 만나이 세는나이 연나이 출력
+        Console.WriteLine(syear + (smonth > 0 ? 0 : (smonth == 0 && sday >= 0) ? 0 : -1));
+        Console.WriteLine(syear + 1);
+        Console.WriteLine(syear);
+    }
     // IV   Pokemon Buddy
     public static void Baek18691()
     {
@@ -465,6 +507,14 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    합
+    public static void Baek8393()
+    {
+        int N = int.Parse(Console.ReadLine()), sum = 0;
+        for (int i = 1; i <= N; ++i)
+            sum += i;
+        Console.WriteLine(sum);
+    }
     // V    A+B -4
     public static void Baek10951()
     {

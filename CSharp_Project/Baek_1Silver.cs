@@ -453,6 +453,45 @@ class Baek_1Silver
 
     #region Silver III
 
+    // III  단어 뒤집기2
+    public static void Baek17413()
+    {
+        var S = Console.ReadLine();
+        Stack<char> stack = new Stack<char>();
+        bool isTag = false;
+        for (int i = 0; i < S.Length; ++i)
+        {
+            if ('<' == S[i])            // 1. 태그 시작
+            {
+                isTag = true;
+                while (stack.Count > 0) // 1-1. Stack에 내용이 있다면 Append
+                    sb.Append(stack.Pop());
+                sb.Append('<');
+            }
+            else if ('>' == S[i])       // 3. 태그 종료
+            {
+                isTag = false;
+                sb.Append('>');
+            }
+            else if (isTag)             // 2-1. Tag일때 -> 계속 Append처리
+                sb.Append(S[i]);
+            else if (' ' != S[i])       // 2-2. Tag아닐때 -> Stack에서 처리
+                stack.Push(S[i]);
+            else                        // 2-3. ' '일때 -> 단어의 끝임.
+            {
+                while (stack.Count > 0) // 2-3-1. Stack에 내용이 있다면 Append
+                    sb.Append(stack.Pop());
+                sb.Append(' ');
+            }
+
+            if (S.Length - 1 == i)      // 4. 마지막 단어일때 처리.
+            {
+                while (stack.Count > 0)
+                    sb.Append(stack.Pop());
+            }
+        }
+        Console.WriteLine(sb);
+    }
     // III  퇴사        (Need Again)
     public static void Baek14501()
     {
