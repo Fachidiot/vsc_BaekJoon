@@ -145,8 +145,40 @@ class Baek_1Silver
 
     #endregion
 
-    #region  Silber II
+    #region  Silver II
 
+    // II   쇠 막대기
+    public static void Baek10799()
+    {
+        string input = Console.ReadLine();
+        Stack<char> stack = new Stack<char>();
+
+        // count: 계산할 총 막대의 수 / init: 계산할 첫 막대의 수 / sum: 막대의 총합
+        int count = 0, init = 0, sum = 0;
+        foreach (var c in input)
+        {
+            switch (c)
+            {
+                case '(':    // 1. '(' 일때
+                    stack.Push(c);
+                    count++;
+                    init++;
+                    break;
+                case ')':    // 2. ')' 일때
+                    count--;
+                    init--;
+                    if (stack.Peek() == '(')    // ()일때만 연산
+                    {   // 레이저 자르기 연산
+                        sum += count + init;
+                        stack.Push(c);
+                    }
+                    init = 0;   // 첫 막대의 연산 종료후 초기화
+                    break;
+            }
+        }
+        Console.WriteLine($"{sum}");
+
+    }
     // II   에디터  (Need Again)
     public static void Baek1406_TLE()
     {

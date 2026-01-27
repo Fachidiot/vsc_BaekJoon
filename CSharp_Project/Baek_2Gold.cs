@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using Microsoft.VisualBasic;
 
 class Baek_2Gold
 {
@@ -32,6 +33,39 @@ class Baek_2Gold
 
     #region Gold IV
 
+    // IV   오큰수
+    public static void Baek17298()
+    {
+        Stack<int> stack = new Stack<int>();
+        int N = int.Parse(Console.ReadLine());
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        foreach (var num in input)
+            stack.Push(num);    // 스택 완성
+
+        int max = -1, right = 0;    // 뒤에서 부터 큰값 / 오른값 저장용 변수
+        for (int i = 0; i < N; ++i) // Big(O) N번만큼만 실행.
+        {
+            right = stack.Pop();    // 오른값 저장.
+            if (max < right)        // Max값 설정.
+                max = right;
+            if (0 == i)             // 맨 뒤부터니까 i == 0 일때 -1추가
+                sb.Insert(0, " -1");
+
+            if (stack.Count > 0)    // Stack이 비어있지 않다면 오른값과 Max값 비교.
+            {
+                if (right > stack.Peek())       // 오른값이 비교수보다 클때 (기본)
+                    sb.Insert(0, $" {right}");
+                else if (max > stack.Peek())    // Max값이 비교수보다 클때
+                    sb.Insert(0, $" {max}");
+                else                            // 오른값&Max값이 비교수보다 작을때. ex (9) 3 5 8
+                    sb.Insert(0, " -1");
+            }
+        }
+        sb.Remove(0, 1);    // 제일 앞줄의 공백 지우기
+
+        Console.WriteLine(sb);
+    }
     // IV   별 찍기11
     public static void Baek2448()
     {
@@ -75,10 +109,10 @@ class Baek_2Gold
         // 삼각형의 윗부분
         if (i < half)
             return Recursion2448(i, j, half);   // 절반의 길이의 같은 좌표로 재귀
-        // // 삼각형의 아래 오른쪽부분
+                                                // // 삼각형의 아래 오른쪽부분
         else if (j >= length)
             return Recursion2448(i - half, j - length, half);   // i: 위로 / j: 왼쪽으로
-        // 삼각형의 아래 왼쪽부분
+                                                                // 삼각형의 아래 왼쪽부분
         else if (j < 2 * (i - half) + 1)
             return Recursion2448(i - half, j, half);    // i: 위로 / j: 그대로
 
@@ -89,6 +123,7 @@ class Baek_2Gold
     #endregion
 
     #region Gold V
+
     // V    별 찍기10
     public static void Baek2447()
     {

@@ -507,6 +507,20 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    개수 세기
+    public static void Baek10807()
+    {
+        int N = int.Parse(Console.ReadLine());
+        int[] array = new int[N];
+        array = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int R = int.Parse(Console.ReadLine()), count = 0;
+        foreach (var num in array)
+        {
+            if (num == R)
+                count++;
+        }
+        Console.WriteLine($"{count}");
+    }
     // V    합
     public static void Baek8393()
     {
