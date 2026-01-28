@@ -637,6 +637,23 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   카드2
+    public static void Baek2164()
+    {
+        Queue<int> que = new Queue<int>();
+        int N = int.Parse(Console.ReadLine()), cnt = 0;
+        for (int i = 0; i < N; ++i)
+            que.Enqueue(i + 1);
+
+        while (que.Count != 1)
+        {
+            var temp = que.Dequeue();
+            if (cnt % 2 == 1)
+                que.Enqueue(temp);
+            cnt++;
+        }
+        Console.WriteLine($"{que.Dequeue()}");
+    }
     // IV   덱
     public static void Baek10866()
     {

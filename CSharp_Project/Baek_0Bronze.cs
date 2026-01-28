@@ -161,6 +161,41 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   나머지
+    public static void Baek3052()
+    {
+        int[] nums = new int[42];
+        for (int i = 0; i < 10; ++i)
+        {
+            int num = int.Parse(Console.ReadLine());
+            nums[num % 42]++;
+        }
+        int difcnt = 0;
+        foreach (var cnt in nums)
+        {
+            if (cnt == 0) continue;
+            ++difcnt;
+        }
+        Console.WriteLine(difcnt);
+    }
+    // II   소수 찾기
+    public static void Baek1978()
+    {
+        int N = int.Parse(Console.ReadLine()), count = 0;
+        var input = Console.ReadLine().Split();
+
+        for (int i = 0; i < N; ++i)
+        {
+            var n = int.Parse(input[i]);
+            // TODO : n이 소수인지 확인해야함.
+            for (int j = 2; j <= n; ++i)
+            {
+                // if (n % j == 0)
+            }
+            count++;
+        }
+        Console.WriteLine(count);
+    }
     // II   피시방 알바
     public static void Baek1453()
     {
