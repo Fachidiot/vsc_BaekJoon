@@ -22,12 +22,119 @@ class Baek_2Gold
     #endregion
 
     #region Gold II
-    // II   name
+
+    // II   후위 표기식
+    public static void Baek1918()
+    {
+        string input = Console.ReadLine();
+        Stack<char> stack = new Stack<char>();
+
+        for (int i = 0; i < input.Length; ++i)
+        {   // 40: ( ~ 47: /
+            if (input[i] >= 40 && input[i] <= 47)
+            {
+                if (')' == input[i])    // '('가 나올때까지 pop
+                {
+                    while (stack.Count > 0)
+                    {
+                        var c = stack.Pop();
+                        if (c == '(')
+                            break;
+                        sb.Append(c);
+                    }
+                }
+                else if (stack.Count > 0)
+                {   // 연산자 우선순위가 stack에 저장된 이전 연산자와 같으면 출력
+                    char cur = input[i], prev = stack.Peek();
+                    IteratrorComparer comparer = new IteratrorComparer();
+
+                    switch (prev)
+                    {
+                        case '+':
+                        case '-':
+                            if ('+' == cur || '-' == cur)
+                                sb.Append(stack.Pop());
+                            break;
+                        case '*':
+                        case '/':
+                            if ('*' == cur || '/' == cur)
+                                sb.Append(stack.Pop());
+                            break;
+                        case '(':
+                            break;
+                    }
+                    stack.Push(input[i]);
+                }
+                else
+                    stack.Push(input[i]);
+            }
+            else
+                sb.Append(input[i]);
+        }
+        while (stack.Count > 0)
+            sb.Append(stack.Pop());
+        Console.WriteLine(sb);
+    }
+    class IteratrorComparer : Comparer<char>
+    {
+        public override int Compare(char x, char y)
+        {
+            if (x == '+' || x == '-')
+            {
+                if (y == '+' || y == '-')
+                    return 0;
+                return -1;
+            }
+            else if (x == '*' || x == '/')
+            {
+                if (y == '+' || y == '-')
+                    return 1;
+                else if (y == '*' || y == '/')
+                    return 0;
+                else    // '()'
+                    return -1;
+            }
+            else
+            {   // '()'
+                if (y == '(' || y == ')')
+                    return 0;
+                else
+                    return 1;
+            }
+        }
+    }
 
     #endregion
 
     #region Gold III
-    // III  name
+
+    // III  오등큰수
+    public static void Baek17299()
+    {
+        Stack<int> stack = new Stack<int>();
+        int N = int.Parse(Console.ReadLine());
+        int[] F = new int[1_000_001], A = new int[N], result = new int[N];
+        Array.Fill(result, -1);
+
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        for (int i = 0; i < N; ++i)
+        {
+            F[input[i]]++;
+            A[i] = input[i];
+        }
+
+        for (int i = 0; i < N; ++i)
+        {
+            while (stack.Count > 0 && F[A[stack.Peek()]] < F[input[i]])
+                result[stack.Pop()] = input[i];
+            stack.Push(i);
+        }
+
+        foreach (var n in result)
+            sb.Append($"{n} ");
+        sb.Remove(sb.Length - 1, 1);
+        Console.WriteLine(sb);
+    }
 
     #endregion
 
@@ -35,6 +142,25 @@ class Baek_2Gold
 
     // IV   오큰수
     public static void Baek17298()
+    {
+        Stack<int> stack = new Stack<int>();
+        int N = int.Parse(Console.ReadLine());
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] result = new int[N];
+        Array.Fill(result, -1);
+
+        for (int i = 0; i < N; ++i)
+        {   // Stack이 비어있지 않고 & input[i](오른쪽 비교수)보다 input[오큰수가 없는 index]가 크면 오큰수 추가
+            while (stack.Count > 0 && input[stack.Peek()] < input[i])
+                result[stack.Pop()] = input[i];
+            stack.Push(i);
+        }
+        foreach (var n in result)
+            sb.Append($"{n} ");
+        sb.Remove(sb.Length - 1, 1);
+        Console.WriteLine(sb);
+    }
+    public static void Baek17298Wrong()
     {
         Stack<int> stack = new Stack<int>();
         int N = int.Parse(Console.ReadLine());

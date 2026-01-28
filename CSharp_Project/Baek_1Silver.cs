@@ -485,6 +485,37 @@ class Baek_1Silver
 
     #region Silver III
 
+    // III  후위 표기식2
+    public static void Baek1935()
+    {
+        int N = int.Parse(Console.ReadLine());
+        string input = Console.ReadLine();
+        int[] nums = new int[N];
+        Stack<double> stack = new Stack<double>();
+
+        for (int i = 0; i < N; ++i)
+            nums[i] = int.Parse(Console.ReadLine());
+        for (int i = 0; i < input.Length; ++i)
+        {
+            double a = 0, b = 0;
+            if ('+' == input[i] || '-' == input[i] || '*' == input[i] || '/' == input[i])
+            {
+                b = stack.Pop();
+                a = stack.Pop();
+                if ('+' == input[i])
+                    stack.Push(a + b);
+                if ('-' == input[i])
+                    stack.Push(a - b);
+                if ('*' == input[i])
+                    stack.Push(a * b);
+                if ('/' == input[i])
+                    stack.Push(a / b);
+            }
+            else
+                stack.Push(nums[input[i] - 'A']);
+        }
+        Console.WriteLine($"{stack.Pop().ToString("F2")}");
+    }
     // III  단어 뒤집기2
     public static void Baek17413()
     {

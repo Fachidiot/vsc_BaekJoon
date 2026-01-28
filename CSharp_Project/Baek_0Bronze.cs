@@ -160,6 +160,41 @@ class Baek_0Bronze
     #endregion
 
     #region Bronze II
+
+    // II   피시방 알바
+    public static void Baek1453()
+    {
+        int N = int.Parse(Console.ReadLine()), count = 0;
+        bool[] seats = new bool[101];
+
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        for (int i = 0; i < N; ++i)
+        {
+            if (!seats[input[i]])
+                seats[input[i]] = true;
+            else
+                ++count;
+        }
+        Console.WriteLine($"{count}");
+    }
+    // II   피보나치 수
+    static int[] array2747;
+    public static void Baek2747()
+    {
+        int N = int.Parse(Console.ReadLine());
+        array2747 = new int[N + 1];
+        Console.WriteLine($"{Fibo2747(N)}");
+    }
+    static int Fibo2747(int n)
+    {
+        if (n == 0)
+            return 0;
+        if (n == 1)
+            return 1;
+        else if (array2747[n] == 0)
+            array2747[n] = Fibo2747(n - 1) + Fibo2747(n - 2);
+        return array2747[n];
+    }
     // II   블랙잭
     static public void Baek2798()
     {
@@ -204,6 +239,23 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  홀수
+    public static void Baek2576()
+    {
+        int sum = 0, min = int.MaxValue;
+        for (int i = 0; i < 7; ++i)
+        {
+            int N = int.Parse(Console.ReadLine());
+            if (N % 2 == 0) continue;
+            sum += N;
+            if (min > N)
+                min = N;
+        }
+        if (sum == 0)
+            Console.WriteLine("-1");
+        else
+            Console.WriteLine($"{sum}\n{min}");
+    }
     // III  세탁소 사장 동혁
     public static void Baek2720()
     {
@@ -407,6 +459,18 @@ class Baek_0Bronze
 
     #region Bronze IV
 
+    // IV   시험 점수
+    public static void Baek5596()
+    {
+        int Ssum = 0, Tsum = 0;
+        var S = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        foreach (var n in S)
+            Ssum += n;
+        var T = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        foreach (var n in T)
+            Tsum += n;
+        Console.WriteLine($"{(Ssum > Tsum ? Ssum : Tsum)}");
+    }
     // IV   나는 행복합니다~
     public static void Baek14652()
     {
