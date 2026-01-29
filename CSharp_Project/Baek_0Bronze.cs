@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Numerics;
@@ -161,6 +162,22 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   알파벳 찾기
+    public static void Baek10809()
+    {
+        var input = Console.ReadLine();
+        int[] alphabets = new int[26];
+        Array.Fill(alphabets, -1);
+        for (int i = 0; i < input.Length; ++i)
+        {
+            if (alphabets[input[i] - 'a'] == -1)
+                alphabets[input[i] - 'a'] = i;
+        }
+        foreach (var idx in alphabets)
+            sb.Append($"{idx} ");
+        sb.Remove(sb.Length - 1, 1);
+        Console.WriteLine(sb);
+    }
     // II   나머지
     public static void Baek3052()
     {
@@ -182,17 +199,19 @@ class Baek_0Bronze
     public static void Baek1978()
     {
         int N = int.Parse(Console.ReadLine()), count = 0;
-        var input = Console.ReadLine().Split();
 
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
         for (int i = 0; i < N; ++i)
         {
-            var n = int.Parse(input[i]);
-            // TODO : n이 소수인지 확인해야함.
-            for (int j = 2; j <= n; ++i)
+            if (input[i] == 1)
+                continue;
+            for (int j = 2; j < 10; ++j)
             {
-                // if (n % j == 0)
+                if (input[i] != j && input[i] % j == 0)
+                    break;
+                if (j == 9)
+                    ++count;
             }
-            count++;
         }
         Console.WriteLine(count);
     }
@@ -213,22 +232,21 @@ class Baek_0Bronze
         Console.WriteLine($"{count}");
     }
     // II   피보나치 수
-    static int[] array2747;
     public static void Baek2747()
     {
         int N = int.Parse(Console.ReadLine());
-        array2747 = new int[N + 1];
-        Console.WriteLine($"{Fibo2747(N)}");
+        int[] array = new int[N + 1];
+        Console.WriteLine($"{Fibo2747(array, N)}");
     }
-    static int Fibo2747(int n)
+    static int Fibo2747(int[] array, int n)
     {
         if (n == 0)
             return 0;
         if (n == 1)
             return 1;
-        else if (array2747[n] == 0)
-            array2747[n] = Fibo2747(n - 1) + Fibo2747(n - 2);
-        return array2747[n];
+        else if (array[n] == 0)
+            array[n] = Fibo2747(array, n - 1) + Fibo2747(array, n - 2);
+        return array[n];
     }
     // II   블랙잭
     static public void Baek2798()
@@ -274,6 +292,26 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  최댓값
+    public static void Baek2566()
+    {
+        int max = int.MinValue;
+        int[] pos = new int[2];
+        for (int i = 0; i < 9; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            for (int j = 0; j < 9; ++j)
+            {
+                if (max < input[j])
+                {
+                    max = input[j];
+                    pos[0] = i + 1;
+                    pos[1] = j + 1;
+                }
+            }
+        }
+        Console.WriteLine($"{max}\n{pos[0]} {pos[1]}");
+    }
     // III  홀수
     public static void Baek2576()
     {
@@ -494,6 +532,33 @@ class Baek_0Bronze
 
     #region Bronze IV
 
+    // IV   뜨거운 붕어빵
+    public static void Baek11945()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = input[0], M = input[1];
+
+        for (int i = 0; i < N; ++i)
+        {
+            var str = Console.ReadLine();
+            for (int j = 0; j < M; ++j)
+                sb.Append(str[M - j - 1]);
+            sb.AppendLine();
+        }
+        Console.WriteLine(sb);
+    }
+    // IV   알파벳 개수
+    public static void Baek10808()
+    {
+        int[] alphabets = new int[26];
+        var input = Console.ReadLine();
+        for (int i = 0; i < input.Length; ++i)
+            alphabets[input[i] - 'a']++;
+        foreach (var cnt in alphabets)
+            sb.Append($"{cnt} ");
+        sb.Remove(sb.Length - 1, 1);
+        Console.WriteLine(sb);
+    }
     // IV   시험 점수
     public static void Baek5596()
     {

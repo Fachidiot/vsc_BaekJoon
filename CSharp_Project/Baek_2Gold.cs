@@ -30,42 +30,49 @@ class Baek_2Gold
         Stack<char> stack = new Stack<char>();
 
         for (int i = 0; i < input.Length; ++i)
-        {   // 40: ( ~ 47: /
-            if (input[i] >= 40 && input[i] <= 47)
+        {   // 40: ( ~ 47: / (연산자 범위)
+            if (input[i] >= 40 && input[i] <= 47)   // if (input이 연산자라면)
             {
-                if (')' == input[i])    // '('가 나올때까지 pop
-                {
+                if (')' == input[i])    // 현재 연산자가 )라면
+                {                       // '('가 나올때까지 pop
                     while (stack.Count > 0)
                     {
                         var c = stack.Pop();
-                        if (c == '(')
+                        if (c == '(')   // 발견시 break;
                             break;
                         sb.Append(c);
                     }
                 }
-                else if (stack.Count > 0)
-                {   // 연산자 우선순위가 stack에 저장된 이전 연산자와 같으면 출력
-                    char cur = input[i], prev = stack.Peek();
-                    IteratrorComparer comparer = new IteratrorComparer();
-
-                    switch (prev)
+                else if (stack.Count > 0)           // 연산자 스택 메모리가 비어있지 않다면
+                {
+                    bool isContinue = true;
+                    char cur = input[i];            // 현재 연산자 저장
+                    while (isContinue && stack.Count > 0)   // 연산자 비교가 끝났는지와 연산자 스택 메모리가 비어있지 않을때
                     {
-                        case '+':
-                        case '-':
-                            if ('+' == cur || '-' == cur)
-                                sb.Append(stack.Pop());
-                            break;
-                        case '*':
-                        case '/':
-                            if ('*' == cur || '/' == cur)
-                                sb.Append(stack.Pop());
-                            break;
-                        case '(':
-                            break;
+                        char prev = stack.Peek();   // 스택의 이전 연산자 저장
+                        switch (prev)
+                        {
+                            case '+':       // +, - 연산자 일때
+                            case '-':       // 연산자 우선순위가 같을때 pop후 출력
+                                if ('+' == cur || '-' == cur)
+                                    sb.Append(stack.Pop());
+                                else        // 연산자 비교가 끝났음.
+                                    isContinue = false;
+                                break;
+                            case '*':       // *, / 연산자 일때
+                            case '/':       // 연산자 우선순위가 같거나 다를때 -> 모든 순간 + 괄호( 가 아닐때 pop후 출력
+                                if ('(' != cur)
+                                    sb.Append(stack.Pop());
+                                else        // 연산자 비교가 끝났음.
+                                    isContinue = false;
+                                break;
+                            case '(':       // 괄호( 연산자 일때
+                                isContinue = false; // 위의 괄호) 연산자를 위해 break;
+                                break;
+                        }
                     }
-                    stack.Push(input[i]);
                 }
-                else
+                if (')' != input[i])        // Stack에 )제외 연산자 push 
                     stack.Push(input[i]);
             }
             else
@@ -73,35 +80,8 @@ class Baek_2Gold
         }
         while (stack.Count > 0)
             sb.Append(stack.Pop());
+
         Console.WriteLine(sb);
-    }
-    class IteratrorComparer : Comparer<char>
-    {
-        public override int Compare(char x, char y)
-        {
-            if (x == '+' || x == '-')
-            {
-                if (y == '+' || y == '-')
-                    return 0;
-                return -1;
-            }
-            else if (x == '*' || x == '/')
-            {
-                if (y == '+' || y == '-')
-                    return 1;
-                else if (y == '*' || y == '/')
-                    return 0;
-                else    // '()'
-                    return -1;
-            }
-            else
-            {   // '()'
-                if (y == '(' || y == ')')
-                    return 0;
-                else
-                    return 1;
-            }
-        }
     }
 
     #endregion
