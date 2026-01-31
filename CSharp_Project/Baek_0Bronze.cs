@@ -162,6 +162,36 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   문자열 분석
+    public static void Baek10820()
+    {
+        while (true)
+        {   // 0:a~z / 1:A~Z / 2:0~9 / 3:' '
+            int[] results = new int[4];
+            string input = Console.ReadLine();
+            if (string.IsNullOrEmpty(input))
+            {
+                Console.WriteLine(sb);
+                return;
+            }
+
+            foreach (var c in input)
+            {
+                if ('a' <= c && c <= 'z')
+                    ++results[0];
+                else if ('A' <= c && c <= 'Z')
+                    ++results[1];
+                else if ('0' <= c && c <= '9')
+                    ++results[2];
+                else if (' ' == c)
+                    ++results[3];
+            }
+            foreach (var result in results)
+                sb.Append($"{result} ");
+            sb.Remove(sb.Length - 1, 1);
+            sb.AppendLine();
+        }
+    }
     // II   알파벳 찾기
     public static void Baek10809()
     {
@@ -292,6 +322,22 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  과제 안 내신 분..?
+    public static void Baek5597()
+    {
+        bool[] students = new bool[30];
+        for (int i = 0; i < 28; ++i)
+        {
+            var num = int.Parse(Console.ReadLine());
+            students[num - 1] = true;
+        }
+
+        for (int i = 0; i < 30; ++i)
+        {
+            if (!students[i])
+                Console.WriteLine(i + 1);
+        }
+    }
     // III  최댓값
     public static void Baek2566()
     {
@@ -532,6 +578,41 @@ class Baek_0Bronze
 
     #region Bronze IV
 
+    // IV   주사위 세개
+    public static void Baek2480Simple()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int A = input[0], B = input[1], C = input[2];
+        if (A == B && B == C)
+            Console.WriteLine($"{A * 1000 + 10000}");
+        else if (A != B && B != C && A != C)
+            Console.WriteLine($"{(A > B && A > C ? A * 100 : B > A && B > C ? B * 100 : C * 100)}");
+        else
+            Console.WriteLine($"{(A == B ? A * 100 + 1000 : C * 100 + 1000)}");
+    }
+    public static void Baek2480()
+    {
+        int[] results = new int[6];
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        for (int i = 0; i < 3; ++i)
+            results[input[i] - 1]++;
+        int only1 = 0, max = 0;
+        for (int i = 0; i < 6; ++i)
+        {
+            if (results[i] == 3)
+                Console.WriteLine($"{10_000 + (i + 1) * 1_000}");
+            else if (results[i] == 2)
+                Console.WriteLine($"{1_000 + (i + 1) * 100}");
+            else if (results[i] == 1)
+            {
+                if (max < i + 1)
+                    max = i + 1;
+                only1++;
+            }
+        }
+        if (only1 == 3)
+            Console.WriteLine($"{max * 100}");
+    }
     // IV   뜨거운 붕어빵
     public static void Baek11945()
     {
@@ -671,6 +752,12 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    단어 길이 재기
+    public static void Baek2743()
+    {
+        string word = Console.ReadLine();
+        Console.WriteLine($"{word.Length}");
+    }
     // V    개수 세기
     public static void Baek10807()
     {

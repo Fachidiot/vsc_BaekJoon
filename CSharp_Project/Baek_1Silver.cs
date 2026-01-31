@@ -637,6 +637,34 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   에라토스테네스의 채
+    public static void Baek2960()
+    {
+        // 2부터 N까지 모든 정수를 적는다.
+        // 아직 지우지 않은 수 중 가장 작은 수를 찾는다. 이것을 P라고 하고, 이 수는 소수이다.
+        // P를 지우고, 아직 지우지 않은 P의 배수를 크기 순서대로 지운다.
+        // 아직 모든 수를 지우지 않았다면, 다시 2번 단계로 간다.
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = input[0], K = input[1], count = 0;
+        bool[] nums = new bool[N + 1];
+
+        for (int i = 2; i <= N; ++i)
+        {   // i는 P값이 된다.
+            for (int j = i; j <= N; j += i)
+            {   // j는 P ~ (P의 배수 < N)N보다 작은 P의 배수까지의 수다.
+                if (!nums[j])
+                {   // 걸러지지 않은 상태라면 거르자.
+                    count++;        // 몇번째로 거르는지 확인
+                    nums[j] = true; // 거른다.
+                    if (count == K) // K번째로 거르는 수라면
+                    {   // 출력 및 loop 종료
+                        Console.WriteLine($"{j}");
+                        return; // 종료
+                    }
+                }
+            }
+        }
+    }
     // IV   카드2
     public static void Baek2164()
     {
@@ -891,6 +919,12 @@ class Baek_1Silver
     #endregion
 
     #region Silver V
+
+    // V    분수찾기
+    public static void Baek1193()
+    {
+        int X = int.Parse(Console.ReadLine());
+    }
     // V    셀프 넘버
     static public void Baek4673()
     {   // 1 3 5 7 9 20 31 42 53 64...
