@@ -22,6 +22,17 @@ class Baek_0Bronze
 
     #region Bronze I
 
+    // I    최대공약수와 최소공배수
+    public static void Baek2609()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int A = input[0], B = input[1];
+
+        // 최대공약수
+
+        // 최소공배수
+
+    }
     // I    단어 뒤집기
     static public void Baek9093()
     {
@@ -322,6 +333,14 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  네 수
+    public static void Baek10824()
+    {
+        var input = Console.ReadLine().Split();
+        int AB = int.Parse(input[0] + input[1]);
+        int CD = int.Parse(input[2] + input[3]);
+        Console.WriteLine($"{AB + CD}");
+    }
     // III  과제 안 내신 분..?
     public static void Baek5597()
     {

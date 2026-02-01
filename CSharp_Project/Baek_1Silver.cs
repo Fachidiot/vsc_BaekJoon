@@ -637,6 +637,23 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   접미사 배열
+    public static void Baek11656()
+    {
+        var input = Console.ReadLine();
+        string[] array = new string[input.Length];
+
+        for (int i = 0; i < input.Length; ++i)
+        {
+            for (int j = 0; j < input.Length - i; ++j)
+                array[i] += input[i + j];
+        }
+        Array.Sort(array);
+        foreach (var s in array)
+            sb.AppendLine(s);
+
+        Console.WriteLine(sb);
+    }
     // IV   에라토스테네스의 채
     public static void Baek2960()
     {
