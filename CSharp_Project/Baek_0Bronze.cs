@@ -22,16 +22,51 @@ class Baek_0Bronze
 
     #region Bronze I
 
+    // I    최소공배수 (Need Again)
+    public static void Baek1934()
+    {
+        int T = int.Parse(Console.ReadLine());
+        for (int i = 0; i < T; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int A = input[0], B = input[1];
+            sb.AppendLine($"{(A * B) / Euclidean1934(A, B)}");
+        }
+        Console.WriteLine(sb);
+    }
+    static int Euclidean1934(int a, int b)
+    {
+        int r = a % b;
+        if (r == 0)
+            return b;
+        return Euclidean1934(b, r);
+    }
     // I    최대공약수와 최소공배수
     public static void Baek2609()
     {
         var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
-        int A = input[0], B = input[1];
-
-        // 최대공약수
+        int A = input[0], B = input[1], min = 0;
 
         // 최소공배수
+        for (int i = A; i > 0; --i)
+        {
+            if (A % i == 0 && B % i == 0)
+            {
+                min = i;
+                Console.WriteLine($"{min}");
+                break;
+            }
+        }
 
+        // 최대공약수
+        for (int i = min; i < int.MaxValue; i += min)
+        {
+            if (i % A == 0 && i % B == 0)
+            {
+                Console.WriteLine($"{i}");
+                break;
+            }
+        }
     }
     // I    단어 뒤집기
     static public void Baek9093()
@@ -173,6 +208,124 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   저항
+    public static void Baek1076()
+    {
+        // 함수방법
+        string c1 = Console.ReadLine();
+        string c2 = Console.ReadLine();
+        string c3 = Console.ReadLine();
+        long sum = GetValue1076(c1) * 10 + GetValue1076(c2);
+        sum *= GetMulti1076(c3);
+        Console.WriteLine($"{sum}");
+
+        #region Mine
+        string num = "";
+        long total = 0;
+        for (int i = 0; i < 3; ++i)
+        {
+            var input = Console.ReadLine();
+            switch (input)
+            {
+                case "black":
+                    if (i != 2) num += 0;
+                    else total = 1 * long.Parse(num);
+                    break;
+                case "brown":
+                    if (i != 2) num += 1;
+                    else total = 10 * long.Parse(num);
+                    break;
+                case "red":
+                    if (i != 2) num += 2;
+                    else total = 100 * long.Parse(num);
+                    break;
+                case "orange":
+                    if (i != 2) num += 3;
+                    else total = 1000 * long.Parse(num);
+                    break;
+                case "yellow":
+                    if (i != 2) num += 4;
+                    else total = 10000 * long.Parse(num);
+                    break;
+                case "green":
+                    if (i != 2) num += 5;
+                    else total = 100000 * long.Parse(num);
+                    break;
+                case "blue":
+                    if (i != 2) num += 6;
+                    else total = 1000000 * long.Parse(num);
+                    break;
+                case "violet":
+                    if (i != 2) num += 7;
+                    else total = 10000000 * long.Parse(num);
+                    break;
+                case "grey":
+                    if (i != 2) num += 8;
+                    else total = 100000000 * long.Parse(num);
+                    break;
+                case "white":
+                    if (i != 2) num += 9;
+                    else total = 1000000000 * long.Parse(num);
+                    break;
+            }
+        }
+        Console.WriteLine($"{total}");
+        #endregion
+    }
+    static long GetValue1076(string color)
+    {
+        switch (color)
+        {
+            case "black":
+                return 0;
+            case "brown":
+                return 1;
+            case "red":
+                return 2;
+            case "orange":
+                return 3;
+            case "yellow":
+                return 4;
+            case "green":
+                return 5;
+            case "blue":
+                return 6;
+            case "violet":
+                return 7;
+            case "grey":
+                return 8;
+            case "white":
+                return 9;
+        }
+        return -1;
+    }
+    static long GetMulti1076(string color)
+    {
+        switch (color)
+        {
+            case "black":
+                return 1;
+            case "brown":
+                return 10;
+            case "red":
+                return 100;
+            case "orange":
+                return 1000;
+            case "yellow":
+                return 10000;
+            case "green":
+                return 100000;
+            case "blue":
+                return 1000000;
+            case "violet":
+                return 10000000;
+            case "grey":
+                return 100000000;
+            case "white":
+                return 1000000000;
+        }
+        return -1;
+    }
     // II   문자열 분석
     public static void Baek10820()
     {
@@ -597,6 +750,18 @@ class Baek_0Bronze
 
     #region Bronze IV
 
+    // IV   파티가 끝나고 난 뒤
+    public static void Baek2845()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int L = input[0], P = input[1]; // 인원 : L & 넓이 : P
+
+        input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        for (int i = 0; i < input.Length; ++i)
+            sb.Append($"{input[i] - L * P} ");  // 신문사 5곳의 틀린수 출력
+        sb.Remove(sb.Length - 1, 1);    // 마지막의 공백 지움
+        Console.WriteLine(sb);
+    }
     // IV   주사위 세개
     public static void Baek2480Simple()
     {

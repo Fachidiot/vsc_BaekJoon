@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography;
 using System.Text;
 
 class Baek_1Silver
@@ -485,6 +486,68 @@ class Baek_1Silver
 
     #region Silver III
 
+    // III  소수 구하기 (Need Again)
+    public static void Baek1929Plus()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int M = input[0], N = input[1];
+
+        for (int i = M; i <= N; ++i)
+        {
+            if (IsPrime1929(i))
+                sb.AppendLine(i.ToString());
+        }
+        Console.WriteLine(sb);
+    }
+    static bool IsPrime1929(int n)
+    {
+        if (n < 2) return false;
+        if (n == 2) return true;
+        if (n % 2 == 0) return false;
+
+        // 
+        for (int i = 3; i * i <= n; i += 2)
+        {
+            if (n % i == 0)
+                return false;
+        }
+        return true;
+    }
+    public static void Baek1929()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int M = input[0], N = input[1];
+
+        // TLE
+        // for (int i = M; i <= N; ++i)
+        // {
+        //     for (int j = 2; j <= i; ++j)
+        //     {
+        //         if (j + 1 == i)
+        //             sb.AppendLine($"{i}");
+        //         if (i % j == 0)
+        //             break;
+        //     }
+        // }
+        // Console.WriteLine(sb);
+
+        bool[] nums = new bool[1_000_001];
+        nums[0] = nums[1] = true;  // 0, 1은 소수가 아님
+        for (int i = 2; i * i <= N; ++i)
+        {
+            if (nums[i]) continue;
+            for (int j = i * i; j <= N; j += i)
+            {   // 2 * 2 부터 소수가 아닌 수를 판별
+                nums[j] = true;
+            }
+        }
+        for (int i = M; i <= N; ++i)
+        {
+            if (!nums[i])
+                sb.AppendLine(i.ToString());
+        }
+        Console.WriteLine(sb);
+    }
     // III  후위 표기식2
     public static void Baek1935()
     {
