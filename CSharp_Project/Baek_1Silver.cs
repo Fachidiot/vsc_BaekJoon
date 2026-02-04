@@ -17,6 +17,39 @@ class Baek_1Silver
     }
 
     #region Silver I
+
+    // I    골드바흐의 추측
+    public static void Baek6588()
+    {
+        bool[] nums = new bool[1000001];
+        nums[0] = nums[1] = true;  // 0, 1은 소수가 아님
+        for (int i = 2; i * i <= 1000000; ++i)
+        {
+            if (nums[i]) continue;
+            for (int j = i * i; j <= 1000000; j += i)
+            {   // 2 * 2 부터 소수가 아닌 수를 판별
+                nums[j] = true;
+            }
+        }
+
+        while (true)
+        {
+            int n = int.Parse(Console.ReadLine());
+            if (n == 0)
+                break;
+
+            for (int i = 2; i <= n / 2; ++i)
+            {
+                if (!nums[i] && !nums[n - i])
+                {
+                    sb.AppendLine($"{n} = {i} + {n - i}");
+                    break;
+                }
+            }
+        }
+        Console.WriteLine(sb);
+
+    }
     // I    미로 탐색
     static public void Baek2178()
     {   // 0,0 => N,M
@@ -148,6 +181,29 @@ class Baek_1Silver
 
     #region  Silver II
 
+    // II   조합 0의 개수
+    public static void Baek2004()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int n = input[0], m = input[1], count = 0;
+        for (int i = m; i < n; ++i)
+        {
+            if (i % 2 == 0 && i % 5 == 0) count += i / 5;
+            if (i % 25 == 0) ++count;
+            if (i % 125 == 0) ++count;
+            if (i % 625 == 0) ++count;
+            if (i % 3125 == 0) ++count;
+            if (i % 15625 == 0) ++count;
+            if (i % 78125 == 0) ++count;
+            if (i % 390625 == 0) ++count;
+            if (i % 1953125 == 0) ++count;
+            if (i % 9765625 == 0) ++count;
+            if (i % 48828125 == 0) ++count;
+            if (i % 244140625 == 0) ++count;
+            if (i % 1220703125 == 0) ++count;
+        }
+        Console.WriteLine($"{count}");
+    }
     // II   쇠 막대기
     public static void Baek10799()
     {
@@ -1000,6 +1056,21 @@ class Baek_1Silver
 
     #region Silver V
 
+    // V    팩토리얼 0의 개수
+    public static void Baek1676()
+    {   // 숫자 N을 입력받기, 개수를 셀 count변수 생성
+        int N = int.Parse(Console.ReadLine()), count = 0;
+
+        // Factorial(N) : 1 ~ N까지의 숫자를 곱함 => 5를 곱하는 횟수 구하기 (2 * 5 = 10)
+        for (int i = 1; i <= N; ++i)
+        {   // i % 5 : 5가 1개, i % 25 0 : 5가 2개, i % 125 : 5가 3개, i % 625 : 5가 4개
+            if (i % 5 == 0) ++count;
+            if (i % 25 == 0) ++count;
+            if (i % 125 == 0) ++count;
+            // if (i % 625 == 0) ++count;   // N은 <= 500 이니깐 125까지의 횟수를 구하자.
+        }
+        Console.WriteLine($"{count}");
+    }
     // V    분수찾기
     public static void Baek1193()
     {

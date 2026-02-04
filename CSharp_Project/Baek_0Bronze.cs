@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing;
 using System.IO;
 using System.Numerics;
@@ -391,19 +392,20 @@ class Baek_0Bronze
     }
     // II   소수 찾기
     public static void Baek1978()
-    {
+    {   // 주어질 숫자의 개수 N, 소수의 개수를 셀 count
         int N = int.Parse(Console.ReadLine()), count = 0;
-
+        // 숫자를 받아 나누어 int배열로 변환
         var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        // 소수 찾는 로직
         for (int i = 0; i < N; ++i)
-        {
-            if (input[i] == 1)
-                continue;
-            for (int j = 2; j < 10; ++j)
-            {
-                if (input[i] != j && input[i] % j == 0)
+        {   // 1은 소수가 아니니까 버린다.
+            if (input[i] == 1) continue;
+            for (int j = 2; j < input[i] + 1; ++j)
+            {   // 2부터 input[i] : 입력받은 수까지 소수인지 확인하기 위한 과정
+                if (input[i] != j && input[i] % j == 0)    // 나머지가 0이라면 소수가아님.
                     break;
-                if (j == 9)
+                if (j == input[i])    // 자기 자신까지 체크했다면 소수임.
                     ++count;
             }
         }
@@ -486,6 +488,33 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  꼬리를 무는 숫자 나열
+    public static void Baek1598()
+    {   // 두 수를 입력 받기
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        // 두 수를 변수로 만들기
+        int A = input[0], B = input[1];
+
+        // 두수의 좌푯값 구하기
+        int Ax = (A - 1) / 4, Ay = (A - 1) % 4;
+        int Bx = (B - 1) / 4, By = (B - 1) % 4;
+
+        // 두 수의 좌푯값을 빼서 거리 구하기 (Unity의 Vec3 - Vec3같은 원리)
+        Console.WriteLine($"{Math.Abs(Ax - Bx) + Math.Abs(Ay - By)}");
+    }
+    // III  팩토리얼
+    public static void Baek10872()
+    {
+        int N = int.Parse(Console.ReadLine());
+        Console.WriteLine($"{Factorial_10872(N)}");
+    }
+    static int Factorial_10872(int N)
+    {
+        if (N == 0)
+            return 1;
+        return N * Factorial_10872(N - 1);
+    }
     // III  네 수
     public static void Baek10824()
     {
