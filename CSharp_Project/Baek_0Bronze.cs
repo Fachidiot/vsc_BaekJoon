@@ -1,12 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
-using System.IO;
 using System.Numerics;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Text;
 
 class Baek_0Bronze
@@ -23,6 +16,63 @@ class Baek_0Bronze
 
     #region Bronze I
 
+    // I    2진수 8진수 (TLE)
+    public static void Baek1373()
+    {
+        var input = Console.ReadLine();
+        int first = input.Length % 3;
+
+        if (first > 0)
+        {
+            int temp = 0;
+            for (int i = 0; i < first; ++i)
+                temp = (temp << 1) + (input[i] - '0');
+            sb.Append(temp);
+        }
+        for (int i = first; i < input.Length; i += 3)
+        {
+            int temp = (input[i] - '0') * 4 +
+                    (input[i + 1] - '0') * 2 +
+                    (input[i + 2] - '0');
+            sb.Append(temp);
+        }
+        Console.WriteLine(sb);
+    }
+    static string TenToEight_1373(BigInteger num)
+    {   // 8진수로 변환
+        BigInteger r = num % 8;
+        BigInteger a = num / 8;
+        if (a >= 8)
+            return TenToEight_1373(a) + r;
+        return (a != 0 ? a.ToString() : "") + r.ToString();
+    }
+    public static void Baek1373_TLE()
+    {
+        string input = Console.ReadLine();
+        BigInteger num = 0;
+        for (int i = 0; i < input.Length; ++i)
+        {   // 10진수 변환
+            num = num << 1;
+            if (input[i] == '1')
+                ++num;
+        }
+        Console.WriteLine($"{TenToEight_1373(num)}");
+    }
+    // I    평균
+    public static void Baek1546()
+    {
+        double N = double.Parse(Console.ReadLine()), max = double.MinValue, sum = 0;
+        var input = Array.ConvertAll(Console.ReadLine().Split(), double.Parse);
+
+        for (int i = 0; i < N; ++i)
+        {
+            if (max < input[i])
+                max = input[i];
+        }
+        for (int i = 0; i < N; ++i)
+            sum += input[i] / max * 100;
+        Console.WriteLine($"{sum / N}");
+    }
     // I    최소공배수 (Need Again)
     public static void Baek1934()
     {
@@ -31,16 +81,16 @@ class Baek_0Bronze
         {
             var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
             int A = input[0], B = input[1];
-            sb.AppendLine($"{(A * B) / Euclidean1934(A, B)}");
+            sb.AppendLine($"{(A * B) / Euclidean_1934(A, B)}");
         }
         Console.WriteLine(sb);
     }
-    static int Euclidean1934(int a, int b)
+    static int Euclidean_1934(int a, int b)
     {
         int r = a % b;
         if (r == 0)
             return b;
-        return Euclidean1934(b, r);
+        return Euclidean_1934(b, r);
     }
     // I    최대공약수와 최소공배수
     public static void Baek2609()
@@ -188,7 +238,7 @@ class Baek_0Bronze
         }
         Console.WriteLine(path);
     }
-    static public void Baek1032Plus()
+    static public void Baek1032_Plus()
     {
         int N = int.Parse(Console.ReadLine());
         for (int i = 0; i < N; ++i)
@@ -209,6 +259,72 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   8진수 2진수
+    static void EightToB_1212(int n, int div = 4)
+    {
+        if (div == 0)
+            return;
+        if (n >= div)
+        {
+            n -= div;
+            sb.Append("1");
+            EightToB_1212(n, div / 2);
+        }
+        else
+        {
+            if (sb.Length != 0)
+                sb.Append("0");
+            EightToB_1212(n, div / 2);
+        }
+    }
+    public static void Baek1212()
+    {
+        var input = Console.ReadLine();
+        for (int i = 0; i < input.Length; ++i)
+        {
+            EightToB_1212(input[i] - '0');
+        }
+        if (input == "0")
+            Console.WriteLine($"0");
+        else
+            Console.WriteLine(sb);
+    }
+    // II   대표값2
+    public static void Baek2587()
+    {
+        int sum = 0;
+        int[] array = new int[5];
+        for (int i = 0; i < 5; ++i)
+        {
+            int input = int.Parse(Console.ReadLine());
+            sum += input;
+
+            array[i] = input;
+        }
+        Array.Sort(array);
+        Console.WriteLine($"{sum / 5}\n{array[2]}");
+    }
+    // II   대표값
+    public static void Baek2592()
+    {
+        int sum = 0, mode = 0, count = 10;
+        int[] nums = new int[1001];
+        while (count-- > 0)
+        {
+            int input = int.Parse(Console.ReadLine());
+            sum += input;
+            nums[input]++;
+        }
+        for (int i = 1; i <= 1000; ++i)
+        {
+            if (count < nums[i])
+            {
+                count = nums[i];
+                mode = i;
+            }
+        }
+        Console.WriteLine($"{sum / 10}\n{mode}");
+    }
     // II   저항
     public static void Baek1076()
     {
@@ -488,6 +604,24 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  집 주소
+    public static void Baek1284()
+    {
+        while (true)
+        {
+            var input = Console.ReadLine();
+            if (input == "0")
+                return;
+            int sum = 2;
+            for (int i = 0; i < input.Length; ++i)
+            {
+                if (input[i] == '1') sum += 2 + 1;
+                else if (input[i] == '0') sum += 4 + 1;
+                else sum += 3 + 1;
+            }
+            Console.WriteLine($"{sum - 1}");
+        }
+    }
     // III  꼬리를 무는 숫자 나열
     public static void Baek1598()
     {   // 두 수를 입력 받기
@@ -792,7 +926,7 @@ class Baek_0Bronze
         Console.WriteLine(sb);
     }
     // IV   주사위 세개
-    public static void Baek2480Simple()
+    public static void Baek2480_Simple()
     {
         var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
         int A = input[0], B = input[1], C = input[2];
@@ -854,8 +988,32 @@ class Baek_0Bronze
         Console.WriteLine(sb);
     }
     // IV   시험 점수
+    public struct Student_5596()
+    {
+        int inf, math, sci, eng;
+        public Student_5596(int[] scores) : this()
+        {
+            inf = scores[0];
+            math = scores[1];
+            sci = scores[2];
+            eng = scores[3];
+        }
+        public int Sum()
+        {
+            return inf + math + sci + eng;
+        }
+        public int Result(Student_5596 student)
+        {
+            return Sum() > student.Sum() ? Sum() : student.Sum();
+        }
+    }
     public static void Baek5596()
     {
+        // 1
+        Student_5596 A = new Student_5596(Array.ConvertAll(Console.ReadLine().Split(), int.Parse));
+        Student_5596 B = new Student_5596(Array.ConvertAll(Console.ReadLine().Split(), int.Parse));
+        Console.WriteLine($"{A.Result(B)}");
+        // 2
         int Ssum = 0, Tsum = 0;
         var S = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
         foreach (var n in S)
@@ -965,6 +1123,16 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    코딩은 체육과목 입니다
+    public static void Baek25314()
+    {
+        int N = int.Parse(Console.ReadLine());
+
+        for (int i = 4; i <= N; i += 4)
+            sb.Append("long ");
+        sb.Append("int");
+        Console.WriteLine(sb);
+    }
     // V    단어 길이 재기
     public static void Baek2743()
     {

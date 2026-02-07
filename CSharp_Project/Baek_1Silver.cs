@@ -120,7 +120,7 @@ class Baek_1Silver
         }
         sw.WriteLine(max.ToString());
     }
-    static public void Baek1932Plus()
+    static public void Baek1932_Plus()
     {
         int N = int.Parse(sr.ReadLine());
         int[][] dp = new int[N][];
@@ -149,7 +149,7 @@ class Baek_1Silver
         }
         sw.WriteLine(max.ToString());
     }
-    static public void Baek1932Again()
+    static public void Baek1932_Again()
     {
         int N = int.Parse(sr.ReadLine());
         int[,] dp = new int[N, N];
@@ -181,28 +181,66 @@ class Baek_1Silver
 
     #region  Silver II
 
-    // II   조합 0의 개수
+    // II   -2진수
+    public static void Baek2089()
+    {
+
+    }
+    // II   숨바꼭질 6
+    static int Euclidean_17087(int a, int b)
+    {
+        int r = a % b;
+        if (r == 0)
+            return b;
+        return Euclidean_17087(b, r);
+    }
+    public static void Baek17087()
+    {
+        // 동생수 : N / 현재 위치 : S
+        var NS = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = NS[0], S = NS[1];
+
+        // 동생들의 위치 입력 받기
+        var A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        for (int i = 0; i < A.Length; ++i)  // 현재 좌표와의 차이값의 절대값을 구해줌.
+            A[i] = Math.Abs(A[i] - S);
+
+        // 최종적인 좌표끼리의 최대 공약수를 구해준다.
+        for (int i = 0; i < A.Length - 1; ++i)
+            A[i + 1] = Euclidean_17087(A[i], A[i + 1]);
+        Console.WriteLine($"{A[A.Length - 1]}");
+    }
+    // II   조합 0의 개수   (Need Again)
     public static void Baek2004()
     {
         var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
-        int n = input[0], m = input[1], count = 0;
-        for (int i = m; i < n; ++i)
+        int n = input[0], m = input[1];
+
+        // n 팩토리얼의 2와 5의 개수
+        long n2 = 0, n5 = 0;
+        // m 팩토리얼의 2와 5의 개수
+        long m2 = 0, m5 = 0;
+        // n-m 팩토리얼의 2와 5의 개수
+        long nm2 = 0, nm5 = 0;
+
+        // 르장드르 공식 (N!팩토리얼을 소인수분해시 특정 소수가 몇번 곱해지는지를 구하는 공식)
+        // 소수의 제곱수를 이용한 풀이 방법.
+        // 2,4,8,16...
+        for (long i = 2; i <= n; i *= 2)
         {
-            if (i % 2 == 0 && i % 5 == 0) count += i / 5;
-            if (i % 25 == 0) ++count;
-            if (i % 125 == 0) ++count;
-            if (i % 625 == 0) ++count;
-            if (i % 3125 == 0) ++count;
-            if (i % 15625 == 0) ++count;
-            if (i % 78125 == 0) ++count;
-            if (i % 390625 == 0) ++count;
-            if (i % 1953125 == 0) ++count;
-            if (i % 9765625 == 0) ++count;
-            if (i % 48828125 == 0) ++count;
-            if (i % 244140625 == 0) ++count;
-            if (i % 1220703125 == 0) ++count;
+            if (i <= n) n2 += n / i;
+            if (i <= m) m2 += m / i;
+            if (i <= n - m) nm2 += (n - m) / i;
         }
-        Console.WriteLine($"{count}");
+        // 5,25,125,625...
+        for (long i = 5; i <= n; i *= 5)
+        {
+            if (i <= n) n5 += n / i;
+            if (i <= m) m5 += m / i;
+            if (i <= n - m) nm5 += (n - m) / i;
+        }
+
+        Console.WriteLine($"{Math.Min(n2 - m2 - nm2, n5 - m5 - nm5)}");
     }
     // II   쇠 막대기
     public static void Baek10799()
@@ -445,13 +483,13 @@ class Baek_1Silver
                 sqaure[i, j] = input[j];
             }
         }
-        IsSquare(0, 0, N);
+        IsSquare_2630(0, 0, N);
         Console.WriteLine(white + "\n" + blue);
 
     }
     static byte[,] sqaure;
     static int white = 0, blue = 0;
-    static public void IsSquare(int x, int y, int length)
+    static public void IsSquare_2630(int x, int y, int length)
     {
         byte first = sqaure[x, y];
         bool isSquare = true;
@@ -478,10 +516,10 @@ class Baek_1Silver
         }
         else
         {
-            IsSquare(x, y, length / 2);
-            IsSquare(x + length / 2, y, length / 2);
-            IsSquare(x, y + length / 2, length / 2);
-            IsSquare(x + length / 2, y + length / 2, length / 2);
+            IsSquare_2630(x, y, length / 2);
+            IsSquare_2630(x + length / 2, y, length / 2);
+            IsSquare_2630(x, y + length / 2, length / 2);
+            IsSquare_2630(x + length / 2, y + length / 2, length / 2);
         }
 
     }
@@ -550,12 +588,12 @@ class Baek_1Silver
 
         for (int i = M; i <= N; ++i)
         {
-            if (IsPrime1929(i))
+            if (IsPrime_1929(i))
                 sb.AppendLine(i.ToString());
         }
         Console.WriteLine(sb);
     }
-    static bool IsPrime1929(int n)
+    static bool IsPrime_1929(int n)
     {
         if (n < 2) return false;
         if (n == 2) return true;
@@ -756,6 +794,34 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   GCD 합
+    static int Euclidean_9613(int a, int b)
+    {
+        int r = a % b;
+        if (r == 0)
+            return b;
+        return Euclidean_9613(b, r);
+    }
+    public static void Baek9613()
+    {
+        int T = int.Parse(Console.ReadLine());
+        while (T > 0)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int n = input[0];
+            long sum = 0;
+
+            for (int i = 1; i < n; ++i)
+            {
+                for (int j = n; j > i; --j)
+                    sum += Euclidean_9613(input[i], input[j]);
+            }
+            sb.AppendLine(sum.ToString());
+
+            --T;
+        }
+        Console.WriteLine(sb);
+    }
     // IV   접미사 배열
     public static void Baek11656()
     {
@@ -871,9 +937,9 @@ class Baek_1Silver
     {
         var NM = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
         int N = NM[0], M = NM[1];
-        Josephus1158(N, M);
+        Josephus_1158(N, M);
     }
-    static void Josephus1158(int N, int K)
+    static void Josephus_1158(int N, int K)
     {   // 1 2 3 4 5 6 7
         Queue<int> queue = new Queue<int>();
         for (int i = 0; i < N; ++i)
@@ -1056,6 +1122,7 @@ class Baek_1Silver
 
     #region Silver V
 
+
     // V    팩토리얼 0의 개수
     public static void Baek1676()
     {   // 숫자 N을 입력받기, 개수를 셀 count변수 생성
@@ -1149,6 +1216,19 @@ class Baek_1Silver
             sw.Write($"{count} ");
         }
         sw.WriteLine();
+    }
+    public struct Person
+    {
+        int weight, height;
+        public Person(int w, int h)
+        {
+            weight = w;
+            height = h;
+        }
+        public bool CompareWith(Person another)
+        {
+            return weight < another.weight && height < another.height;
+        }
     }
 
     #endregion
