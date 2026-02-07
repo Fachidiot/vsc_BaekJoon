@@ -181,10 +181,41 @@ class Baek_1Silver
 
     #region  Silver II
 
-    // II   -2진수
+    // II   골드바흐 파티션
+    public static void Baek17103()
+    {   // 에라토스테네스의 체
+
+
+        int T = int.Parse(Console.ReadLine());
+        while (T-- > 0)
+        {
+            int N = int.Parse(Console.ReadLine());
+            
+        }
+    }
+    // II   -2진수  (Need Again)
+    static void TenToMinus2_2089(int n)
+    {
+        int r = n % -2;
+        n /= -2;
+        if (r < 0)
+        {   // 나머지값이 음수일때
+            r += 2;
+            n += 1;
+        }
+        if (n == 0)
+        {   // 더이상 나눌 수가 아닐때부터 Append 시작
+            sb.Append(r);
+            return;
+        }
+        TenToMinus2_2089(n);
+        sb.Append(r);
+    }
     public static void Baek2089()
     {
-
+        int N = int.Parse(Console.ReadLine());
+        TenToMinus2_2089(N);
+        Console.WriteLine(sb);
     }
     // II   숨바꼭질 6
     static int Euclidean_17087(int a, int b)
