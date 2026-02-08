@@ -259,6 +259,33 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   진법 변환   (Need Again)
+    public static void Baek2745()
+    {
+        long result = 0;
+        var input = Console.ReadLine().Split();
+        string N = input[0];
+        int B = int.Parse(input[1]);
+        for (int i = 0; i < N.Length; ++i)
+        {
+            int index = N.Length - i - 1;
+            if (N[i] == '0')
+                continue;
+            if (index == 0)
+            {
+                if (N[N.Length - 1] <= '9')
+                    result += N[N.Length - 1] - '0';
+                else
+                    result += N[N.Length - 1] - 55;
+                continue;
+            }
+            if (N[i] <= '9')
+                result += (int)Math.Pow(B, index) * (N[i] - '0');
+            else
+                result += (int)Math.Pow(B, index) * (N[i] - 55);
+        }
+        Console.WriteLine($"{result}");
+    }
     // II   8진수 2진수
     static void EightToB_1212(int n, int div = 4)
     {
