@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -18,6 +16,18 @@ class Baek_1Silver
 
     #region Silver I
 
+    // I    카드 구매하기
+    public static void Baek11052()
+    {
+        int n = int.Parse(Console.ReadLine());
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        for (int i = 0; i < n; ++i)
+        {
+            // if (max < input)
+        }
+
+    }
     // I    골드바흐의 추측
     public static void Baek6588()
     {
@@ -184,14 +194,30 @@ class Baek_1Silver
     // II   골드바흐 파티션
     public static void Baek17103()
     {   // 에라토스테네스의 체
-
+        bool[] nums = new bool[1000001];
+        nums[0] = nums[1] = true;
+        for (int i = 2; i < 1000; ++i)
+        {
+            for (int j = i * i; j < 1000001; j += i)
+            {
+                if (nums[j]) continue;
+                if (i != j && j % i == 0)
+                    nums[j] = true;
+            }
+        }
 
         int T = int.Parse(Console.ReadLine());
         while (T-- > 0)
         {
-            int N = int.Parse(Console.ReadLine());
-            
+            int N = int.Parse(Console.ReadLine()), count = 0;
+            for (int i = 2; i <= N / 2; ++i)
+            {
+                if (!nums[i] && !nums[N - i])
+                    ++count;
+            }
+            sb.AppendLine($"{count}");
         }
+        Console.WriteLine($"{sb}");
     }
     // II   -2진수  (Need Again)
     static void TenToMinus2_2089(int n)
@@ -611,6 +637,75 @@ class Baek_1Silver
 
     #region Silver III
 
+    // III  1, 2, 3, 더하기
+    public static void Baek9095()
+    {
+        int[] dp = new int[12];
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 4;
+        for (int i = 4; i <= 11; ++i)
+            dp[i] = dp[i - 1] + dp[i - 2] + dp[i - 3];
+
+        int T = int.Parse(Console.ReadLine());
+        while (T-- > 0)
+        {
+            int n = int.Parse(Console.ReadLine());
+            sb.AppendLine($"{dp[n]}");
+        }
+        Console.WriteLine(sb);
+    }
+    // III  2 x n 타일링
+    public static void Baek11726()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] dp = new int[n + 1];
+        dp[0] = dp[1] = 1;
+
+        for (int i = 2; i <= n; ++i)
+            dp[i] = (dp[i - 1] + dp[i - 2]) % 10007;
+        Console.WriteLine($"{dp[n]}");
+    }
+    // III  2 x n 타일링 2
+    public static void Baek11727()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] dp = new int[n + 1];
+        dp[0] = dp[1] = 1;
+
+        for (int i = 2; i <= n; ++i)
+            dp[i] = (dp[i - 1] + dp[i - 2] * 2) % 10007;
+        Console.WriteLine($"{dp[n]}");
+    }
+    // III  1로 만들기  (Need Again)
+    public static void Baek1463()
+    {
+        long X = long.Parse(Console.ReadLine());
+        if (X < 3)
+        {
+            if (1 == X)
+                Console.WriteLine(0);
+            else
+                Console.WriteLine(1);
+            return;
+        }
+
+        int[] dp = new int[X + 1];
+        dp[1] = dp[2] = dp[3] = 1;
+
+        for (int i = 3; i <= X; ++i)
+        {
+            if (dp[i] != 0) continue;
+            int min = dp[i - 1] + 1;
+            if (i % 2 == 0)
+                min = Math.Min(min, dp[i / 2] + 1);
+            if (i % 3 == 0)
+                min = Math.Min(min, dp[i / 3] + 1);
+
+            dp[i] = min;
+        }
+        Console.WriteLine($"{dp[X]}");
+    }
     // III  소수 구하기 (Need Again)
     public static void Baek1929Plus()
     {
@@ -763,7 +858,6 @@ class Baek_1Silver
 
         Console.WriteLine($"{dp[N]}");
     }
-
     // III  체스판 다시 칠하기
     static public void Baek1018()
     {
@@ -825,6 +919,21 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   보물
+    public static void Baek1026()
+    {
+        int N = int.Parse(Console.ReadLine()), sum = 0;
+        int[] A = new int[N], B = new int[N];
+
+        A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        Array.Sort(A, (num1, num2) => num2.CompareTo(num1));    // 내림차순
+        B = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        Array.Sort(B);  // 오름차순
+
+        for (int i = 0; i < N; ++i)
+            sum += A[i] * B[i];
+        Console.WriteLine($"{sum}");
+    }
     // IV   GCD 합
     static int Euclidean_9613(int a, int b)
     {
@@ -1153,7 +1262,159 @@ class Baek_1Silver
 
     #region Silver V
 
+    // V    너의 평점은
+    struct Student_25026
+    {
+        float[] grades; // 학점
+        float[] ranks;  // 등급
+        int index;
 
+        public Student_25026(int length)
+        {
+            grades = new float[length];
+            ranks = new float[length];
+            index = 0;
+        }
+        public void InsertData(float grade, float rank)
+        {
+            grades[index] = grade;
+            ranks[index++] = rank;
+        }
+        public float GetSum()
+        {
+            float sum = 0;
+            for (int i = 0; i < grades.Length; ++i)
+                sum += grades[i] * ranks[i];
+            return sum;
+        }
+        public float GetGradeSum()
+        {
+            float sum = 0;
+            foreach (var grade in grades)
+                sum += grade;
+            return sum;
+        }
+    }
+    public static void Baek25206()
+    {
+        Student_25026 student = new Student_25026(20);
+        for (int i = 0; i < 20; ++i)
+        {
+            var input = Console.ReadLine().Split();
+            float rank = 0;
+            if ("P" == input[2])    // P일경우 점수 합산에 미포함.
+                continue;
+            else if ("F" == input[2])
+                rank = 0;
+            else
+                rank = 4 - (input[2][0] - 65) + (input[2][1] == '+' ? 0.5f : 0);
+
+            student.InsertData(float.Parse(input[1]), rank);
+        }
+
+        float sum = student.GetSum();
+        float gradeSum = student.GetGradeSum();
+
+        if (gradeSum == 0)
+            Console.WriteLine(gradeSum.ToString("F6"));
+        else
+            Console.WriteLine((sum / gradeSum).ToString("F6"));
+    }
+    // V    성적 통계
+    public static void Baek5800()
+    {
+        int K = int.Parse(Console.ReadLine());
+        for (int i = 0; i < K; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int N = input[0], maxGap = 0;
+            int[] grades = new int[N], gaps = new int[N - 1];
+
+            for (int j = 0; j < N; ++j)
+                grades[j] = input[j + 1];
+            Array.Sort(grades);
+            for (int j = 1; j < N; ++j)
+            {
+                gaps[j - 1] = grades[j] - grades[j - 1];
+                if (maxGap < gaps[j - 1])
+                    maxGap = gaps[j - 1];
+            }
+            Console.WriteLine($"Class {i + 1}\nMax {grades[N - 1]}, Min {grades[0]}, Largest gap {maxGap}");
+        }
+    }
+    // V    인기 투표
+    public static void Baek11637()
+    {
+        int T = int.Parse(Console.ReadLine());
+        while (T-- > 0)
+        {
+            int N = int.Parse(Console.ReadLine()), total = 0;
+            int[] p = new int[N], max = new int[2];    // max[0] : 투표수, max[1] : 번호
+            for (int i = 0; i < N; ++i)
+            {
+                p[i] = int.Parse(Console.ReadLine());
+                if (max[0] < p[i])
+                {
+                    max[0] = p[i];
+                    max[1] = i;
+                }
+                total += p[i];
+            }
+
+            for (int i = 0; i < N; ++i)
+            {
+                if (i != max[1])
+                {
+                    if (p[i] == max[0])
+                    {   // No Winner
+                        Console.WriteLine("no winner");
+                        break;
+                    }
+                }
+                if (i == N - 1)
+                {
+                    if (total / 2 < max[0])    // 과반수 이상일 경우
+                        Console.WriteLine($"majority winner {max[1] + 1}");
+                    else                  // 과반수 이하일 경우
+                        Console.WriteLine($"minority winner {max[1] + 1}");
+                }
+            }
+        }
+    }
+    // V    Base Conversion
+    static int TenToB_11576(int N, int B, int r = 1)
+    {
+        r *= B;
+        if (r < N)
+            N = TenToB_11576(N, B, r);
+        r /= B;
+        if (r > N)
+        {
+            sb.Append("0 ");
+            return N;
+        }
+        else
+        {
+            int d = N / r;
+            sb.Append($"{d} ");
+            return N % r;
+        }
+    }
+    public static void Baek11576()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int A = input[0], B = input[1], m = int.Parse(Console.ReadLine());
+        input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        int N = 0, index = 0;
+        while (m-- > 0) // A진법의 미지의수를 10진수로
+            N += (int)Math.Pow(A, m) * input[index++];
+
+        // 미지의수 N을 B진법 변환
+        TenToB_11576(N, B);
+        sb.Remove(sb.Length - 1, 1);
+        Console.WriteLine(sb);
+    }
     // V    팩토리얼 0의 개수
     public static void Baek1676()
     {   // 숫자 N을 입력받기, 개수를 셀 count변수 생성

@@ -16,6 +16,98 @@ class Baek_0Bronze
 
     #region Bronze I
 
+    // I    2007년
+    public static void Baek1924()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] days = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };    // 각 달의 일수 저장
+        string[] dates = { "SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT" };   // 최종 요일 저장
+                                                                                // 0      1     2      3      4      5      6
+        int month = input[0], day = input[1];
+
+        while (--month > 0)         // 자기 자신의 달을 제외하기 위한 전위감소 실행
+            day += days[month - 1]; // 배열이니까 -1한 index값의 일수를 더해주기.
+        Console.WriteLine($"{dates[day % 7]}"); // 모든 일수를 구했다면 7의 나머지가 요일이된다.
+    }
+    // I    일곱 난쟁이
+    public static void Baek2309()
+    {
+        List<int> dwarfs = new List<int>();
+        int sum = 0, num;
+        for (int i = 0; i < 9; ++i)
+        {
+            dwarfs.Add(int.Parse(Console.ReadLine()));
+            sum += dwarfs[i];
+        }
+        dwarfs.Sort();
+
+        num = sum - 100;
+        for (int i = 0; i < 9 - 1; ++i)
+        {
+            for (int j = 0; j < 9; ++j)
+            {
+                if (i == j) continue;
+                if (num == dwarfs[i] + dwarfs[j])
+                {
+                    var temp1 = dwarfs[i];
+                    var temp2 = dwarfs[j];
+                    dwarfs.Remove(temp1);
+                    dwarfs.Remove(temp2);
+                    j = 9;
+                    break;
+                }
+
+            }
+            if (dwarfs.Count == 7)
+            {
+                foreach (var dwarf in dwarfs)
+                {
+                    Console.WriteLine(dwarf.ToString());
+                }
+                break;
+            }
+        }
+    }
+    // I    소인수분해
+    public static void Baek11653()
+    {
+        int N = int.Parse(Console.ReadLine()), divider = 2;
+        while (N > 1)
+        {
+            if (N % divider != 0)
+                ++divider;
+            else
+            {
+                N /= divider;
+                sb.AppendLine($"{divider}");
+            }
+        }
+        Console.WriteLine(sb);
+    }
+    // I    진법 변환 2
+    static int TenToB_11005(int n, int b, long r = 1)
+    {
+        r *= b;
+        if (n >= r)  // 더 큰 지수로 나눌수 있다면 나눠줌
+            n = TenToB_11005(n, b, r);
+
+        r /= b;
+        int t = n / (int)r;
+        if (t >= 10)
+            sb.Append($"{(char)('7' + t)}");
+        else
+            sb.Append($"{t}");
+
+        return n % (int)r;
+    }
+    public static void Baek11005()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = input[0], B = input[1];
+
+        TenToB_11005(N, B);
+        Console.WriteLine(sb);
+    }
     // I    2진수 8진수 (TLE)
     public static void Baek1373()
     {
@@ -176,46 +268,6 @@ class Baek_0Bronze
                 Console.WriteLine(i);
         }
     }
-    // I    일곱 난쟁이
-    static public void Baek2109()
-    {
-        List<int> dwarfs = new List<int>();
-        int sum = 0, num;
-        for (int i = 0; i < 9; ++i)
-        {
-            dwarfs.Add(int.Parse(sr.ReadLine()));
-            sum += dwarfs[i];
-        }
-        dwarfs.Sort();
-
-        num = sum - 100;
-        for (int i = 0; i < 9 - 1; ++i)
-        {
-            for (int j = 0; j < 9; ++j)
-            {
-                if (i == j) continue;
-                if (num == dwarfs[i] + dwarfs[j])
-                {
-                    var temp1 = dwarfs[i];
-                    var temp2 = dwarfs[j];
-                    dwarfs.Remove(temp1);
-                    dwarfs.Remove(temp2);
-                    j = 9;
-                    break;
-                }
-
-            }
-            if (dwarfs.Count == 7)
-            {
-                foreach (var dwarf in dwarfs)
-                {
-                    sw.WriteLine(dwarf.ToString());
-                }
-                break;
-            }
-        }
-
-    }
     // I    명령 프롬프트
     static public void Baek1032()
     {
@@ -259,32 +311,41 @@ class Baek_0Bronze
 
     #region Bronze II
 
-    // II   진법 변환   (Need Again)
+    // II   숫자의 개수
+    public static void Baek2577()
+    {
+        int A = int.Parse(Console.ReadLine());
+        int B = int.Parse(Console.ReadLine());
+        int C = int.Parse(Console.ReadLine());
+        int[] counts = new int[10]; // 0 ~ 9까지의 갯수를 저장할 배열
+
+        string result = (A * B * C).ToString(); // A*B*C한 값은 int를 초과하니까 string으로 받기
+
+        foreach (var c in result)   // ex) char:1 -> int:49
+            ++counts[c - '0'];      // char - char로 값을 구함.
+                                    // '1' - '0'-> 49 - 48 = 1
+        foreach (var i in counts)
+            Console.WriteLine($"{i}");  // 출력
+    }
+    // II   진법 변환
     public static void Baek2745()
     {
-        long result = 0;
         var input = Console.ReadLine().Split();
         string N = input[0];
-        int B = int.Parse(input[1]);
-        for (int i = 0; i < N.Length; ++i)
+        int B = int.Parse(input[1]), R = 0;
+
+        for (int i = N.Length - 1; i >= 0; --i)
         {
-            int index = N.Length - i - 1;
-            if (N[i] == '0')
-                continue;
-            if (index == 0)
-            {
-                if (N[N.Length - 1] <= '9')
-                    result += N[N.Length - 1] - '0';
-                else
-                    result += N[N.Length - 1] - 55;
-                continue;
-            }
-            if (N[i] <= '9')
-                result += (int)Math.Pow(B, index) * (N[i] - '0');
+            if (N[i] == '0') continue;
+            int t = (int)Math.Pow(B, N.Length - i - 1);
+            int p;
+            if ('A' <= N[i])
+                p = N[i] - 'A' + 10;
             else
-                result += (int)Math.Pow(B, index) * (N[i] - 55);
+                p = int.Parse(N[i].ToString());
+            R += t * p;
         }
-        Console.WriteLine($"{result}");
+        Console.WriteLine($"{R}");
     }
     // II   8진수 2진수
     static void EightToB_1212(int n, int div = 4)
@@ -631,6 +692,57 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  약수 구하기
+    public static void Baek2501()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = input[0], K = input[1], count = 0;
+
+        for (int i = 0; i < N; ++i)
+        {
+            if (0 == N % (i + 1))   // 나눠 질때만 카운팅
+                ++count;
+            if (count == K)         // 카운팅이 목표점에 도달했을때
+            {
+                Console.WriteLine($"{i + 1}");  // 약수 값 출력후
+                return;                         // 종료
+            }
+        }
+        Console.WriteLine($"0");    // for문을 빠져 나왔음 -> 목표값의 약수가 존재하지 않음.
+    }
+    // III  직사각형에서 탈출
+    public static void Baek1085()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int x = input[0], y = input[1], w = input[2], h = input[3];
+
+        Console.WriteLine($"{Math.Min(Math.Min(w - x, h - y), Math.Min(x, y))}");
+    }
+    // III  2의 제곱인가?
+    public static void Baek11966()
+    {
+        int N = int.Parse(Console.ReadLine());
+        while (N > 1)
+        {
+            if (0 == N % 2)
+                N /= 2;
+            else
+            {
+                Console.WriteLine(0);
+                return;
+            }
+        }
+        Console.WriteLine(1);
+    }
+    // III  플러그
+    public static void Baek2010()
+    {
+        int N = int.Parse(Console.ReadLine()), total = 0;
+        for (int i = 0; i < N; ++i) // 멀티탭에 연결 가능한 모든 구멍 갯수 더해주기.
+            total += int.Parse(Console.ReadLine());
+        total -= N - 1; // 마지막 멀티탭 빼곤 1개씩 서로의 멀티탭에 연결해주니까 빼주기.
+        Console.WriteLine(total);
+    }
     // III  집 주소
     public static void Baek1284()
     {
@@ -1150,6 +1262,17 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    X보다 작은 수
+    public static void Baek10871()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int N = input[0], X = input[1];
+        input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        foreach (var n in input)
+            if (n < X) sb.Append($"{n} ");
+        sb.Remove(sb.Length - 1, 1);
+        Console.WriteLine(sb);
+    }
     // V    코딩은 체육과목 입니다
     public static void Baek25314()
     {
