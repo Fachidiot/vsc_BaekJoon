@@ -20,13 +20,16 @@ class Baek_1Silver
     public static void Baek11052()
     {
         int n = int.Parse(Console.ReadLine());
-        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        var p = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] dp = new int[n + 1];  // dp[1 ~ n]
 
-        for (int i = 0; i < n; ++i)
+        for (int i = 1; i <= n; ++i)        // 카드 i장의 최대 크기를 저장.
         {
-            // if (max < input)
+            for (int j = 1; j <= i; ++j)    // 카드팩 j번과 이전 크기의 최대값의 합중 최대값을 저장.    
+                dp[i] = Math.Max(p[j - 1] + dp[i - j], dp[i]);  // p는 0번 인덱스부터 시작하므로 j - 1로 구해줌.
         }
 
+        Console.WriteLine(dp[n]);
     }
     // I    골드바흐의 추측
     public static void Baek6588()

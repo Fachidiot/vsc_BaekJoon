@@ -2,3 +2,5 @@
 모든 블럭 펼치기    cmd + K -> cmd + j
 
 주석            cmd + /
+
+검색            cmd + P
