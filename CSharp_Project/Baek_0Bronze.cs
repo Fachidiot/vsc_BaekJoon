@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 class Baek_0Bronze
@@ -65,6 +66,34 @@ class Baek_0Bronze
                     Console.WriteLine(dwarf.ToString());
                 }
                 break;
+            }
+        }
+    }
+    public static void BAek2309_Array()
+    {
+        int[] dwarfs = new int[9];
+        int sum = 0;
+        for (int i = 0; i < 9; ++i)
+        {
+            dwarfs[i] = int.Parse(Console.ReadLine());
+            sum += dwarfs[i];
+        }
+
+        Array.Sort(dwarfs);
+        int num = sum - 100;    // 난쟁이 9명의 총합의 100을 뺀 값의 난쟁이의 키값을 찾자.
+        for (int i = 0; i < 9; ++i)
+        {
+            for (int j = i + 1; j < 9; ++j)
+            {
+                if (num == dwarfs[i] + dwarfs[j])
+                {
+                    for (int k = 0; k < 9; ++k)
+                    {
+                        if (k == i || k == j) continue;
+                        Console.WriteLine(dwarfs[k]);
+                    }
+                    return;
+                }
             }
         }
     }
@@ -311,6 +340,80 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   탄산 음료
+    public static void Baek5032()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int e = input[0], f = input[1], c = input[2];
+
+        int total = e + f, drinkCount = 0;
+        while (total >= c)
+        {
+            int newBottles = total / c;
+            drinkCount += newBottles;
+
+            total = total % c;
+            total += newBottles;
+        }
+        Console.WriteLine(drinkCount);
+    }
+    // II   벌집
+    public static void Baek2292()
+    {
+        // 1 : 1            1
+        // 2 ~ 7 : 2        6
+        // 8 ~ 19 : 3       12
+        // 20 ~ 37 : 4      18
+        // 38 ~ 61 : 5      24
+        // 62 ~ 91 : 6      30
+
+        int n = int.Parse(Console.ReadLine());
+        int count = 1;
+
+        for (int i = 1; i <= int.MaxValue; i += 6 * (count - 1))
+        {
+            if (i >= n)
+            {
+                Console.WriteLine($"{count}");
+                return;
+            }
+            ++count;
+        }
+    }
+    // II   손익분기점
+    public static void Baek1712()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int A = input[0], B = input[1], C = input[2];
+
+        if (B >= C)
+            Console.WriteLine($"-1");
+        else
+            Console.WriteLine($"{A / (C - B) + 1}");
+    }
+    // II   카드 역배치
+    public static void Baek10804()
+    {
+        int[] cards = new int[20];
+        for (int i = 0; i < 20; ++i)
+            cards[i] = i + 1;       // 1 ~ 20 숫자 카드 생성
+
+        for (int i = 0; i < 10; ++i)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int a = input[0] - 1, b = input[1] - 1; // a, b 입력 받기
+
+            for (int j = 0; j <= (b - a) / 2; ++j)  // b - a번 반복해서 카드 재배치
+            {   // 카드 Swap
+                var temp = cards[j + a];
+                cards[j + a] = cards[b - j];
+                cards[b - j] = temp;
+            }
+        }
+
+        foreach (var card in cards)     // 순서대로 카드 출력
+            Console.Write($"{card} ");
+    }
     // II   숫자의 개수
     public static void Baek2577()
     {
@@ -692,6 +795,52 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  수학은 체육과목 입니다
+    public static void Baek15984()
+    {
+        /*
+        1 : 4  -> 4
+        2 : 8  -> 4 (-1 +1 +2 +2)
+        3 : 12 -> 8 (-2 +1 +2 +3)
+        4 : 16 -> 12 (-3 +1 +2 +4)
+        5 : 20 -> 16 (-4 +1 +2 +5)
+        */
+        int n = int.Parse(Console.ReadLine());
+        Console.WriteLine((long)n * 4);
+    }
+    // III  헬멧과 조끼
+    public static void Baek15781()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int n = input[0], m = input[1];
+
+        int[] helmets = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] vests = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        Array.Sort(helmets);
+        Array.Sort(vests);
+
+        Console.WriteLine($"{helmets[n - 1] + vests[m - 1]}");
+    }
+    // III  공
+    public static void Baek1547()
+    {
+        int m = int.Parse(Console.ReadLine());
+        bool[] cups = new bool[3];
+        cups[0] = true;
+
+        while (m-- > 0)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int x = input[0] - 1, y = input[1] - 1;
+            var temp = cups[x];
+            cups[x] = cups[y];
+            cups[y] = temp;
+        }
+
+        for (int i = 0; i < 3; ++i)
+            if (cups[i]) Console.WriteLine($"{i + 1}");
+    }
     // III  약수 구하기
     public static void Baek2501()
     {
@@ -1052,6 +1201,34 @@ class Baek_0Bronze
 
     #region Bronze IV
 
+    // IV   모음의 개수
+    public static void Baek1264()
+    {
+        string list = "aeiouAEIOU";
+        while (true)
+        {
+            var input = Console.ReadLine();
+            if ("#" == input)
+                break;
+
+            int count = 0;
+            foreach (var c in input)
+                if (list.Contains(c)) count++;
+            sb.AppendLine(count.ToString());
+        }
+        Console.WriteLine(sb);
+    }
+    // IV   줄번호
+    public static void Baek4470()
+    {
+        int n = int.Parse(Console.ReadLine());
+        for (int i = 0; i < n; ++i)
+        {
+            var input = Console.ReadLine();
+            sb.AppendLine($"{i + 1}. {input}");
+        }
+        Console.WriteLine(sb);
+    }
     // IV   파티가 끝나고 난 뒤
     public static void Baek2845()
     {
@@ -1262,6 +1439,14 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    엄청난 부자2
+    public static void Baek1271()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), BigInteger.Parse);
+        BigInteger n = input[0], m = input[1];
+
+        Console.WriteLine($"{n / m}\n{n % m}");
+    }
     // V    X보다 작은 수
     public static void Baek10871()
     {

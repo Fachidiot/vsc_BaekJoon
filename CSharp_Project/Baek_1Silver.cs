@@ -16,6 +16,21 @@ class Baek_1Silver
 
     #region Silver I
 
+    // I    1, 2, 3 더하기 5
+    public static void Baek15990()
+    {
+        int t = int.Parse(Console.ReadLine());
+        while (t-- > 0)
+        {
+            int n = int.Parse(Console.ReadLine());
+        }
+    }
+    // I    쉬운 계단 수
+    public static void Baek10844()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+    }
     // I    카드 구매하기
     public static void Baek11052()
     {
@@ -30,6 +45,22 @@ class Baek_1Silver
         }
 
         Console.WriteLine(dp[n]);
+    }
+    // I    카드 구매하기 2
+    public static void Baek16194()
+    {
+        int n = int.Parse(Console.ReadLine());
+        var p = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] dp = new int[n + 1];
+        Array.Fill(dp, int.MaxValue);
+        dp[0] = 0;
+
+        for (int i = 1; i <= n; ++i)
+        {
+            for (int j = 1; j <= i; ++j)
+                dp[i] = Math.Min(dp[i], p[j - 1] + dp[i - j]);
+        }
+        Console.WriteLine($"{dp[n]}");
     }
     // I    골드바흐의 추측
     public static void Baek6588()
@@ -1265,6 +1296,25 @@ class Baek_1Silver
 
     #region Silver V
 
+    // V    배열 합치기
+    public static void Baek11728()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int n = input[0], m = input[1], index = 0;
+
+        int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] B = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] C = new int[n + m];
+
+        foreach (var a in A)
+            C[index++] = a;
+        foreach (var b in B)
+            C[index++] = b;
+
+        Array.Sort(C);
+        foreach (var c in C)
+            Console.Write($"{c} ");
+    }
     // V    너의 평점은
     struct Student_25026
     {
