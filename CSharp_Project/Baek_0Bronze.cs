@@ -340,6 +340,22 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   오르막
+    public static void Baek14910()
+    {
+        var n = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int first = n[0];
+        for (int i = 1; i < n.Length; ++i)
+        {
+            if (first > n[i])
+            {
+                Console.WriteLine("Bad");
+                return;
+            }
+            first = n[i];
+        }
+        Console.WriteLine("Good");
+    }
     // II   탄산 음료
     public static void Baek5032()
     {
@@ -795,6 +811,20 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  팰린드롬인지 확인하기
+    public static void Baek10988()
+    {
+        var input = Console.ReadLine();
+        Console.WriteLine(Palindrome_10988(input));
+    }
+    static int Palindrome_10988(string str)
+    {
+        for (int i = 0; i < str.Length / 2; ++i)
+        {
+            if (str[i] != str[str.Length - 1 - i]) return 0;
+        }
+        return 1;
+    }
     // III  수학은 체육과목 입니다
     public static void Baek15984()
     {
@@ -1439,6 +1469,23 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    문자열
+    public static void Baek9086()
+    {
+        int t = int.Parse(Console.ReadLine());
+        for (int i = 0; i < t; ++i)
+        {
+            string input = Console.ReadLine();
+            Console.WriteLine($"{input[0]}{input[input.Length - 1]}");
+        }
+    }
+    // V    문자와 문자열
+    public static void Baek27866()
+    {
+        string input = Console.ReadLine();
+        int num = Convert.ToInt32(Console.ReadLine());
+        Console.WriteLine(input[num - 1]);
+    }
     // V    엄청난 부자2
     public static void Baek1271()
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
 class Baek_1Silver
@@ -16,20 +17,56 @@ class Baek_1Silver
 
     #region Silver I
 
-    // I    1, 2, 3 더하기 5
+    // I    1, 2, 3 더하기 5    (Need Again)
     public static void Baek15990()
     {
+        // 마지막에 더할 숫자를 1, 2, 3으로 구분지어 경우의수 계산
+        // 1 : 1                -> [1, 1] = 1
+        // 2 : 2                -> [2, 1] = 0, [2, 2] = 1
+        // 3 : 1 + 2, 2 + 1, 3  -> [3, 1] = 1, [3, 2] = 1, [3, 3] = 1
+
+        int[,] dp = new int[100001, 4];     // 100000까지 저장할 dp 배열
+        dp[1, 1] = dp[2, 2] = dp[3, 1] = dp[3, 2] = dp[3, 3] = 1;   // 기본값
+
+        for (int i = 4; i < 100001; ++i)
+        {   // 연산 수행 : 1, 2, 3을 마지막에 더해줄 경우의 수를 저장해주기.
+            dp[i, 1] = (dp[i - 1, 2] + dp[i - 1, 3]) % 1_000_000_009;
+            dp[i, 2] = (dp[i - 2, 1] + dp[i - 2, 3]) % 1_000_000_009;
+            dp[i, 3] = (dp[i - 3, 1] + dp[i - 3, 2]) % 1_000_000_009;
+        }
+        // 4의 1일때 : 3을 만들수 있는 경우의수중 2, 3이 가장 마지막에 더해줄때를 더해준다.
+        // 4의 2일때 : 3을 만들수 있는 경우의수중 1, 3이 가장 마지막에 더해줄때를 더해준다.
+        // 4의 3일때 : 3을 만들수 있는 경우의수중 1, 2이 가장 마지막에 더해줄때를 더해준다.
+
         int t = int.Parse(Console.ReadLine());
         while (t-- > 0)
         {
             int n = int.Parse(Console.ReadLine());
+            long result = ((long)dp[n, 1] + dp[n, 2] + dp[n, 3]) % 1_000_000_009L;  // 연산하려는 숫자 하나만 캐스팅하고 연산
+            sb.AppendLine(result.ToString());
         }
+        Console.WriteLine(sb);
     }
     // I    쉬운 계단 수
     public static void Baek10844()
     {
-        int n = int.Parse(Console.ReadLine());
+        int[,] dp = new int[101, 10];
+        for (int i = 1; i < 10; ++i)    // 1 ~ 9 기본값 세팅
+            dp[1, i] = 1;
 
+        for (int i = 2; i < 101; ++i)   // 2자리수 부터 계산 시작.
+        {
+            for (int j = 1; j < 9; ++j) // 1 ~ 9가 마지막 전자리일때의 경우의 수 계산
+                dp[i, j] = (dp[i - 1, j - 1] + dp[i - 1, j + 1]) % 1_000_000_000;   // 점화식
+            dp[i, 0] = dp[i - 1, 1] % 1_000_000_000;    // 0일때 예외 처리
+            dp[i, 9] = dp[i - 1, 8] % 1_000_000_000;    // 9일때 예외 처리
+        }
+
+        int n = int.Parse(Console.ReadLine());
+        long result = 0;
+        for (int i = 0; i < 10; ++i)    // 결과값 더해주기.
+            result += dp[n, i];
+        Console.WriteLine(result % 1_000_000_000L);     // 출력
     }
     // I    카드 구매하기
     public static void Baek11052()
@@ -223,8 +260,33 @@ class Baek_1Silver
 
     #endregion
 
-    #region  Silver II
+    #region Silver II
 
+    // II   가장 긴 증가하는 부분 수열
+    public static void Baek11053()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int max = 1;
+        int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] dp = new int[n];
+
+        for (int i = 0; i < n - 1; ++i)
+        {
+            int temp = A[i];
+            dp[i] = 1;
+            for (int j = i + 1; j < n; ++j)
+            {
+                if (temp < A[j])
+                {
+                    temp = A[j];
+                    ++dp[i];
+                }
+            }
+            if (max < dp[i])
+                max = dp[i];
+        }
+        Console.WriteLine(max);
+    }
     // II   골드바흐 파티션
     public static void Baek17103()
     {   // 에라토스테네스의 체
@@ -671,6 +733,20 @@ class Baek_1Silver
 
     #region Silver III
 
+    // III  이친수
+    public static void Baek2193()
+    {
+        long[,] dp = new long[91, 2];
+        dp[1, 1] = dp[2, 0] = 1;
+        for (int i = 3; i < 91; ++i)
+        {
+            dp[i, 0] = dp[i - 1, 0] + dp[i - 1, 1];
+            dp[i, 1] = dp[i - 1, 0];
+        }
+
+        int n = int.Parse(Console.ReadLine());
+        Console.WriteLine(dp[n, 0] + dp[n, 1]);
+    }
     // III  1, 2, 3, 더하기
     public static void Baek9095()
     {
@@ -1218,6 +1294,42 @@ class Baek_1Silver
     // IV   스택
     public static void Baek10828()
     {
+        Stack<int> stack = new Stack<int>();
+        int n = int.Parse(Console.ReadLine());
+        while (n-- > 0)
+        {
+            var input = Console.ReadLine().Split();
+            switch (input[0])
+            {
+                case "push":
+                    stack.Push(int.Parse(input[1]));
+                    break;
+                case "pop":
+                    if (stack.Count == 0)
+                        Console.WriteLine(-1);
+                    else
+                        Console.WriteLine(stack.Pop());
+                    break;
+                case "size":
+                    Console.WriteLine(stack.Count);
+                    break;
+                case "empty":
+                    if (stack.Count == 0)
+                        Console.WriteLine(1);
+                    else
+                        Console.WriteLine(0);
+                    break;
+                case "top":
+                    if (stack.Count == 0)
+                        Console.WriteLine(-1);
+                    else
+                        Console.WriteLine(stack.Peek());
+                    break;
+            }
+        }
+    }
+    public static void Baek10828_OLD()
+    {
         int N = int.Parse(Console.ReadLine()), count = 0;
         int[] stack = new int[N];
 
@@ -1296,6 +1408,45 @@ class Baek_1Silver
 
     #region Silver V
 
+    // V    크로아티아 알파벳
+    public static void Baek2941()
+    {
+        var input = Console.ReadLine();
+        int count = 0;
+
+        for (int i = 0; i < input.Length; ++i)
+        {
+            switch (input[i])
+            {
+                case 'd':
+                    if (i < input.Length - 2 && input[i + 1] == 'z' && input[i + 2] == '=') continue;
+                    break;
+                case 'l':
+                    if (i < input.Length - 1 && input[i + 1] == 'j') continue;
+                    break;
+                case 'n':
+                    if (i < input.Length - 1 && input[i + 1] == 'j') continue;
+                    break;
+                case '-':
+                    continue;
+                case '=':
+                    continue;
+            }
+            ++count;
+        }
+        Console.WriteLine(count);
+    }
+    public static void Baek2941_Simple()
+    {
+        sb.Clear();
+        sb.Append(Console.ReadLine());
+        sb.Replace("dz=", "d");
+        sb.Replace("lj", "l");
+        sb.Replace("nj", "n");
+        sb.Replace("=", "");
+        sb.Replace("-", "");
+        Console.WriteLine(sb.Length);
+    }
     // V    배열 합치기
     public static void Baek11728()
     {

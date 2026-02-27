@@ -3,6 +3,40 @@ using System.Text.RegularExpressions;
 
 class Cs_Basic
 {
+    // [Catch Exception]
+    public static void CatchException()
+    {
+        try
+        {
+            int now = DateTime.Now.Second;
+            Console.WriteLine($"[0] 현재 초 : {now}");
+
+            int result = 2 / (now % 2);
+            Console.WriteLine($"[1] 홀수 초에서는 정상 처리");
+        }
+        catch
+        {
+            Console.WriteLine($"[2] 짝수 초에서는 런타임 에러 발생");
+        }
+
+        int x = 5;
+        int y = 0;
+        int r;
+        try
+        {
+            r = x / y;
+            Console.WriteLine($"{x} / {y} = {r}");
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"에러가 발생했습니다. {e}");
+        }
+        finally
+        {
+            Console.WriteLine("프로그램을 종료합니다.");
+        }
+    }
+
     // [object 형변환]
     public static void ObjectChange()
     {
@@ -36,7 +70,6 @@ class Cs_Basic
         PrintStars("하나");
         PrintStars(5);
     }
-
     static void PrintStars(object o)
     {
         if (o is null)
