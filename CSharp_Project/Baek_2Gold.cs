@@ -120,6 +120,34 @@ class Baek_2Gold
 
     #region Gold IV
 
+    // IV   가장 긴 증가하는 부분 수열 4    (Need Again)
+    public static void Baek14002()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] dp = new int[n];
+        int max = 0;
+
+        for (int i = 0; i < n; ++i)
+        {
+            dp[i] = 1;
+            for (int j = 0; j < n; ++j)
+            {
+                if (A[i] > A[j])
+                    dp[i] = Math.Max(dp[j] + 1, dp[i]);
+            }
+            max = Math.Max(max, dp[i]);
+        }
+        Console.Write($"{max}\n");
+
+        int[] list = new int[max];
+        for (int i = n - 1; i >= 0; --i)
+        {
+            if (dp[i] == max)   // dp의 개수를 순서로 큰수부터 찾아나감.
+                list[max-- - 1] = A[i];
+        }
+        Console.WriteLine(string.Join(' ', list));
+    }
     // IV   오큰수
     public static void Baek17298()
     {
@@ -230,6 +258,34 @@ class Baek_2Gold
 
     #region Gold V
 
+    // V    합분해  (Need Again)
+    public static void Baek2225()
+    {
+        /*
+        n을 정수k개로 만들수 있는 경우의 수 구하기.
+        1/1 : 1     1/2 : 0     1/3 : 0     1/4 : 0
+        2/1 : 1     2/2 : 1     2/3 : 0     2/4 : 0
+        3/1 : 1     3/2 : 2     3/3 : 1     3/4 : 0
+        4/1 : 1     4/2 : 3     4/3 : 3     4/4 : 1
+        5/1 : 1     5/2 : 4     5/3 : 6     5/4 : 4
+        6/1 : 1     6/2 : 5     6/3 : 7     6/4 : 10
+        */
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int n = input[0], k = input[1];
+        int[][] dp = new int[k + 1][];
+        dp[1] = new int[n + 1];
+        Array.Fill(dp[1], 1);   // k가 1일때는 1개밖에 없음.
+
+        for (int i = 2; i <= k; ++i)
+        {
+            dp[i] = new int[n + 1];
+            dp[i][0] = 1;       // 합이 0일땐 0으로 더하는 방법밖에 없으므로 1로 지정 0 + 0 ... + 0 : 1가지
+            for (int j = 1; j <= n; ++j)
+                dp[i][j] = (dp[i][j - 1] + dp[i - 1][j]) % 1_000_000_000;
+        }
+
+        Console.WriteLine(dp[k][n]);
+    }
     // V    별 찍기10
     public static void Baek2447()
     {

@@ -1,4 +1,8 @@
 ﻿using System;
+using System.ComponentModel;
+using System.IO.MemoryMappedFiles;
+using System.Runtime.CompilerServices;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -17,6 +21,23 @@ class Baek_1Silver
 
     #region Silver I
 
+    // I    RGB거리     (Need Again)
+    public static void Baek1149()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[][] dp = new int[n][];
+
+        for (int i = 0; i < n; ++i)     // 비용 받기.
+            dp[i] = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        for (int i = 1; i < n; ++i)
+        {   // 색칠 비용을 계산하며 덮어 씌우기
+            dp[i][0] += Math.Min(dp[i - 1][1], dp[i - 1][2]);   // 0일땐 1,2중
+            dp[i][1] += Math.Min(dp[i - 1][0], dp[i - 1][2]);   // 1일땐 0,2중
+            dp[i][2] += Math.Min(dp[i - 1][0], dp[i - 1][1]);   // 2일땐 0,1중
+        }
+        Console.WriteLine(Math.Min(dp[n - 1][0], Math.Min(dp[n - 1][1], dp[n - 1][2])));
+    }
     // I    1, 2, 3 더하기 5    (Need Again)
     public static void Baek15990()
     {
@@ -262,28 +283,106 @@ class Baek_1Silver
 
     #region Silver II
 
+    // II   1, 2, 3 더하기 3
+    public static void Baek15988()
+    {
+        /*
+        1:1     1
+        2:2     1+1
+                2
+        3:4     1+1+1 1+2
+                2+1
+                3
+        4:7     1+1+1+1 1+1+2 1+2+1 1+3
+                2+1+1 2+2
+                3+1
+        5:13    1+1+1+1+1 1+1+1+2 1+1+2+1 1+2+1+1 1+2+2 1+1+3 1+3+1
+                2+1+1+1 2+2+1 2+1+2 2+3
+                3+1+1 3+2
+        */
+        int[] dp = new int[1000001];
+        dp[1] = 1;
+        dp[2] = 2;
+        dp[3] = 4;
+        for (int i = 4; i <= 1000000; ++i)
+            dp[i] = (int)(((long)dp[i - 1] + dp[i - 2] + dp[i - 3]) % 1_000_000_009);
+
+        int t = int.Parse(Console.ReadLine());
+        while (t-- > 0)
+        {
+            int n = int.Parse(Console.ReadLine());
+            Console.WriteLine(dp[n]);
+        }
+    }
+    // II   제곱수의 합
+    public static void Baek1699()
+    {
+        /*
+        1 : 1   6 : 3   11 : 3  dp[11 - x^2] + 1 = dp[2] + 1 = 3
+        2 : 2   7 : 4   12 : 3  dp[12 - x^2] + 1 = dp[8] + 1 = 3
+        3 : 3   8 : 2   13 : 4  dp[13 - x^2] + 1 = dp[9,4] + 1 = 2
+        4 : 1   9 : 1   14 : 4  dp[14 - x^2] + 1 = dp[10,5] + 1 = 3
+        5 : 2   10 : 2  N : r   dp[N - x^2] + 1
+        */
+
+        int n = int.Parse(Console.ReadLine());
+        int[] dp = new int[n + 1];
+
+        for (int i = 1; i <= n; ++i)
+        {
+            dp[i] = i;
+            for (int j = 1; j * j <= i; ++j)
+            {
+                dp[i] = Math.Min(dp[i], dp[i - j * j] + 1);
+            }
+        }
+        Console.WriteLine(dp[n]);
+    }
+    // II   연속합
+    public static void Baek1912()
+    {
+        /*
+        수열 A에서 연속된 수의 합중 가장 큰 값 구하기.
+        10
+        10 -4 3 1 5 6 -35 12 21 -1  : 12 + 21 = 33
+        10
+        2 1 -4 3 4 -4 6 5 -5 1      : 3 + 4 - 4 + 6 + 5 = 14
+
+        이전 dp값이 양수일때만 가져가자.
+        A[i] vs A[i] + dp[i - 1]
+        */
+        int n = int.Parse(Console.ReadLine());
+        int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] dp = new int[n];
+        int max = A[0];
+
+        dp[0] = A[0];
+        for (int i = 1; i < n; ++i)
+        {   // 수열중 현재 수(A[i])와 이전 수열의 합의 합중 큰값을 dp에 저장.
+            dp[i] = Math.Max(A[i], A[i] + dp[i - 1]);
+
+            max = Math.Max(max, dp[i]);
+        }
+
+        Console.WriteLine(max);
+    }
     // II   가장 긴 증가하는 부분 수열
     public static void Baek11053()
     {
         int n = int.Parse(Console.ReadLine());
-        int max = 1;
         int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
         int[] dp = new int[n];
+        int max = 1;
 
-        for (int i = 0; i < n - 1; ++i)
+        for (int i = 1; i < n; ++i)
         {
-            int temp = A[i];
             dp[i] = 1;
-            for (int j = i + 1; j < n; ++j)
+            for (int j = 0; j < n; ++j)
             {
-                if (temp < A[j])
-                {
-                    temp = A[j];
-                    ++dp[i];
-                }
+                if (A[i] > A[j])
+                    dp[i] = Math.Max(dp[j] + 1, dp[i]);
             }
-            if (max < dp[i])
-                max = dp[i];
+            max = Math.Max(max, dp[i]);
         }
         Console.WriteLine(max);
     }
@@ -1029,6 +1128,71 @@ class Baek_1Silver
 
     #region Silver IV
 
+    // IV   숫자 카드 2
+    public static void Baek10816()
+    {   // -10_000_000 ~ 10_000_000 + 0 -> 20_000_001 -> 80MB?
+        int[] cards = new int[20_000_001];
+        FastReader fr = new FastReader();
+        FastWriter fw = new FastWriter();
+
+        int n = fr.NextInt();
+        for (int i = 0; i < n; ++i)
+            ++cards[fr.NextInt() + 10_000_000];
+
+        n = fr.NextInt();
+        for (int i = 0; i < n; ++i)
+            fw.WriteIntAndSpace(cards[fr.NextInt() + 10_000_000]);
+
+        fw.Flush();
+    }
+    public static void Baek10816_Dictionary()
+    {
+        Dictionary<int, int> cards = new Dictionary<int, int>();
+        FastReader fr = new FastReader();
+
+        int n = fr.NextInt();
+        for (int i = 0; i < n; ++i)
+        {
+            int index = fr.NextInt();
+            cards.TryGetValue(index, out int count);    // 기존 값이 있다면 가져오기.
+            cards[index] = ++count;                     // 기존값 + 1 저장
+        }
+
+        n = fr.NextInt();
+        // Console.WriteLine 대신 StreamWriter 파이프를 직접 연결 (버퍼 64KB)
+        using (StreamWriter sw = new StreamWriter(Console.OpenStandardOutput(), bufferSize: 65536))
+        {
+            for (int i = 0; i < n; ++i)
+            {
+                // 2. StringBuilder에 모으지 않고, 파이프에 직접 숫자를 욱여넣습니다.
+                cards.TryGetValue(fr.NextInt(), out int count);    // 갯수 가져오기.
+                sw.Write(count);
+                sw.Write(' ');
+            }
+        }// using 블록이 끝나면 버퍼에 남은 것들을 콘솔에 자동으로 쫙 밀어냅니다(Flush).
+    }
+    // IV   요세푸스 문제 0
+    public static void Baek11866()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int n = input[0], k = input[1];
+        Queue<int> que = new Queue<int>();
+
+        for (int i = 1; i <= n; ++i)
+            que.Enqueue(i);
+
+        sb.Append('<');
+
+        while (que.Count > 0)
+        {
+            for (int i = 0; i < k - 1; ++i)
+                que.Enqueue(que.Dequeue());
+
+            sb.Append($"{que.Dequeue()}, ");
+        }
+        sb.Append($"{que.Dequeue()}>");
+        Console.WriteLine(sb);
+    }
     // IV   보물
     public static void Baek1026()
     {
@@ -1259,36 +1423,28 @@ class Baek_1Silver
     public static void Baek9012()
     {
         int T = int.Parse(Console.ReadLine());
-        for (int i = 0; i < T; ++i)
+        while (T-- > 0)
         {
             bool isTrue = true;
             Stack<char> stack = new Stack<char>();
-            int count = 0;
+
             var input = Console.ReadLine();
             foreach (var symbol in input)
             {
-                if (stack.Count == 0)
-                {
-                    stack.Push(symbol);
-                    count++;
-                    continue;
-                }
                 if (symbol == '(')
-                {
                     stack.Push('(');
-                    count++;
-                }
-                else if (stack.Peek() == '(')
+                else
                 {
+                    if (stack.Count <= 0)
+                    {
+                        isTrue = false;
+                        break;
+                    }
                     stack.Pop();
-                    count--;
                 }
-                else if (stack.Count == 0)
-                    isTrue = false;
             }
 
-            Console.WriteLine($"{(count == 0 && isTrue ? "Yes" : "No")}");
-
+            Console.WriteLine($"{(isTrue && stack.Count == 0 ? "YES" : "NO")}");
         }
     }
     // IV   스택
@@ -1408,6 +1564,83 @@ class Baek_1Silver
 
     #region Silver V
 
+    // V    색종이
+    public static void Baek2563()
+    {
+        FastReader fr = new FastReader();
+        bool[,] paper = new bool[101, 101];
+        int n = fr.NextInt(), count = 0;
+
+        while (n-- > 0)
+        {
+            int x = fr.NextInt(), y = fr.NextInt();
+            for (int i = x; i < x + 10; ++i)
+            {
+                for (int j = y; j < y + 10; ++j)
+                {
+                    if (!paper[i, j])
+                    {
+                        paper[i, j] = true;
+                        ++count;
+                    }
+                }
+            }
+        }
+        FastWriter fw = new FastWriter();
+        fw.WriteIntAndSpace(count);
+        fw.Flush();
+    }
+    // V    숫자 맞추기
+    public static void Baek4335()
+    {
+        int high = 11, low = 0;
+        while (true)
+        {
+            int n = int.Parse(Console.ReadLine());
+            if (0 == n) return;
+            var ans = Console.ReadLine().Split();
+
+            switch (ans[1])
+            {
+                case "high":
+                    high = Math.Min(high, n);
+                    break;
+                case "low":
+                    low = Math.Max(low, n);
+                    break;
+                case "on":
+                    if (high > n && low < n)
+                        Console.WriteLine("Stan may be honest");
+                    else
+                        Console.WriteLine("Stan is dishonest");
+                    high = 11;
+                    low = 0;
+                    break;
+            }
+        }
+    }
+    // V    회사에 있는 사람
+    public static void Baek7785()
+    {
+        HashSet<string> members = new HashSet<string>();
+        int n = int.Parse(Console.ReadLine());
+        while (n-- > 0)
+        {
+            var input = Console.ReadLine().Split();
+            if ("enter" == input[1])
+                members.Add(input[0]);
+            else
+            {
+                if (members.Contains(input[0]))
+                    members.Remove(input[0]);
+            }
+        }
+        List<string> list = [.. members];
+        list.Sort((a, b) => b.CompareTo(a));
+        foreach (var m in list)
+            sb.AppendLine(m);
+        Console.WriteLine(sb);
+    }
     // V    크로아티아 알파벳
     public static void Baek2941()
     {

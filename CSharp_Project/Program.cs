@@ -8,13 +8,12 @@ class Program
 {
     public static void Main(string[] args)
     {
-        // Baek_0Bronze.Baek27866();
-        Baek_1Silver.Baek11053();
-        // Baek_2Gold.Baek1918();
+        // Baek_0Bronze.Baek11655();
+        Baek_1Silver.Baek1149();
+        // Baek_2Gold.Baek2225();
     }
 }
 
-// static StringBuilder sb = new StringBuilder();
 
 // static StreamWriter sw = new StreamWriter(Console.OpenStandardOutput());
 // static StreamReader sr = new StreamReader(Console.OpenStandardInput());

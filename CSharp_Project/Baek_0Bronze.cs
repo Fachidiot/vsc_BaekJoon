@@ -17,6 +17,37 @@ class Baek_0Bronze
 
     #region Bronze I
 
+    // I    ROT13
+    public static void Baek11655()
+    {
+        string input = Console.ReadLine();
+        char temp = ' ';
+        foreach (var c in input)
+        {
+            if ('A' <= c && c <= 'Z')
+            {
+                if (c + 13 > 'Z')
+                    temp = (char)(c + 12 - 'Z' + 'A');
+                else
+                    temp = (char)(c + 13);
+            }
+            else if ('a' <= c && c <= 'z')
+            {
+                if (c + 13 > 'z')
+                    temp = (char)(c + 12 - 'z' + 'a');
+                else
+                    temp = (char)(c + 13);
+            }
+            else
+            {
+                sb.Append(c);
+                continue;
+            }
+
+            sb.Append(temp);
+        }
+        Console.WriteLine(sb);
+    }
     // I    2007년
     public static void Baek1924()
     {

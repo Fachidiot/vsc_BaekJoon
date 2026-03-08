@@ -3,6 +3,75 @@ using System.Text.RegularExpressions;
 
 class Cs_Basic
 {
+    // [Dictionary]
+    public static void UseDictionary()
+    {
+        Dictionary<string, string> data = new Dictionary<string, string>();
+
+        data.Add("cs", "C#");
+        data.Add("aspx", "ASP.NET");
+
+        data.Remove("aspx");
+        data["cshtml"] = "ASP.NET MVC";
+
+        try
+        {
+            data["cs"] = "CSharp";
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.Message);
+        }
+
+        foreach (var item in data)
+            Console.WriteLine($"{item.Key}는 {item.Value}의 확장자입니다.");
+
+        Console.WriteLine(data["cs"]);
+
+        try
+        {
+            Console.WriteLine(data["vb"]);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+
+        if (data.TryGetValue("cs", out var csharp))
+            Console.WriteLine(csharp);
+        else
+            Console.WriteLine("cs 키가 없습니다.");
+
+        if (!data.ContainsKey("json"))
+        {
+            data.Add("json", "JSON");
+            Console.WriteLine(data["json"]);
+        }
+
+        var values = data.Values;
+        foreach (var v in values)
+            Console.WriteLine($"{v}\t");
+        Console.WriteLine();
+    }
+
+    // [Enumerable 사용법]
+    public static void UseEnumerable()
+    {
+        var numbers = Enumerable.Range(1, 5);
+        foreach (var n in numbers)
+            Console.Write($"{n}\t");
+        Console.WriteLine();
+
+        var sameNumbers = Enumerable.Repeat(-1, 5);
+        foreach (var n in sameNumbers)
+            Console.Write($"{n}\t");
+        Console.WriteLine();
+
+
+        string str = string.Join(", ", Enumerable.Range(1, 5));
+        Console.WriteLine(str);
+    }
+
     // [Catch Exception]
     public static void CatchException()
     {
