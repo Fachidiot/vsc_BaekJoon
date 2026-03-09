@@ -21,6 +21,23 @@ class Baek_1Silver
 
     #region Silver I
 
+    // I    동물원
+    public static void Baek1309()
+    {
+        int n = int.Parse(Console.ReadLine()), sum = 0;
+        int[] dp = new int[n];
+        if (n > 0)
+            sum += dp[0] = 2;
+        if (n > 1)
+            sum += dp[1] = 4;
+
+        for (int i = 2; i < n; ++i)
+        {
+            dp[i] = dp[i - 1] % 9901 * 2 + dp[i - 2] % 9901;
+            sum = dp[i] % 9901 + sum % 9901;
+        }
+        Console.WriteLine(sum + 1);
+    }
     // I    RGB거리     (Need Again)
     public static void Baek1149()
     {
