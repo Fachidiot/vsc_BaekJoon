@@ -34,7 +34,7 @@ class Baek_1Silver
         for (int i = 2; i < n; ++i)
         {
             dp[i] = dp[i - 1] % 9901 * 2 + dp[i - 2] % 9901;
-            sum = dp[i] % 9901 + sum % 9901;
+            sum = (dp[i] + sum) % 9901;
         }
         Console.WriteLine(sum + 1);
     }
