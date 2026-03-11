@@ -9,7 +9,7 @@ class Program
     public static void Main(string[] args)
     {
         // Baek_0Bronze.Baek11655();
-        Baek_1Silver.Baek1309();
+        // Baek_1Silver.Baek11057();
         // Baek_2Gold.Baek2225();
     }
 }

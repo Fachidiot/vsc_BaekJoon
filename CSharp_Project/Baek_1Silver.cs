@@ -21,6 +21,45 @@ class Baek_1Silver
 
     #region Silver I
 
+    // I    오르막 수 
+    public static void Baek11057_Upgrade()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] dp = new int[10];
+        Array.Fill(dp, 1);
+
+        while (--n > 0)
+        {
+            for (int j = 1; j < 10; ++j)
+                dp[j] = (dp[j] + dp[j - 1]) % 10_007;
+        }
+
+        int sum = 0;
+        foreach (int val in dp)
+            sum += val;
+
+        Console.WriteLine(sum % 10_007);
+    }
+    public static void Baek11057()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[,] dp = new int[n + 1, 10];
+        for (int i = 0; i < 10; ++i)
+            dp[1, i] = 1;
+
+        for (int i = 2; i <= n; ++i)
+        {
+            dp[i, 0] = 1;
+            for (int j = 1; j < 10; ++j)
+                dp[i, j] = (dp[i - 1, j] + dp[i, j - 1]) % 10_007;
+        }
+
+        int sum = 0;
+        for (int i = 0; i < 10; ++i)
+            sum += dp[n, i];
+
+        Console.WriteLine(sum % 10_007);
+    }
     // I    동물원
     public static void Baek1309()
     {
