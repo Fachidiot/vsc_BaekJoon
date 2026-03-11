@@ -1500,6 +1500,18 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    라면 공식
+    public static void Baek30007()
+    {
+        int n = int.Parse(Console.ReadLine());
+        while (n-- > 0)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int a = input[0], b = input[1], x = input[2];
+            sb.AppendLine((a * (x - 1) + b).ToString());
+        }
+        Console.WriteLine(sb);
+    }
     // V    문자열
     public static void Baek9086()
     {

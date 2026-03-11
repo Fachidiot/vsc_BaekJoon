@@ -8,8 +8,8 @@ class Program
 {
     public static void Main(string[] args)
     {
-        // Baek_0Bronze.Baek11655();
-        Baek_1Silver.Baek9465();
+        Baek_0Bronze.Baek30007();
+        // Baek_1Silver.Baek9465();
         // Baek_2Gold.Baek2225();
     }
 }
