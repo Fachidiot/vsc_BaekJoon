@@ -21,6 +21,36 @@ class Baek_1Silver
 
     #region Silver I
 
+    // I    스티커
+    public static void Baek9465()
+    {
+        FastReader fr = new FastReader();
+        int T = fr.NextInt();
+
+        while (T-- > 0)
+        {
+            /// Input
+            int n = fr.NextInt();
+            int[,] dp = new int[2, n];
+
+            for (int i = 0; i < n; ++i) dp[0, i] = fr.NextInt();
+            for (int i = 0; i < n; ++i) dp[1, i] = fr.NextInt();
+
+            if (n > 1)
+            {
+                dp[0, 1] += dp[1, 0];
+                dp[1, 1] += dp[0, 0];
+            }
+
+            for (int i = 2; i < n; ++i)
+            {
+                dp[0, i] = Math.Max(dp[1, i - 1], dp[1, i - 2]) + dp[0, i];
+                dp[1, i] = Math.Max(dp[0, i - 1], dp[0, i - 2]) + dp[1, i];
+            }
+            sb.AppendLine(Math.Max(dp[0, n - 1], dp[1, n - 1]).ToString());
+        }
+        Console.WriteLine(sb);
+    }
     // I    오르막 수 
     public static void Baek11057_Upgrade()
     {
