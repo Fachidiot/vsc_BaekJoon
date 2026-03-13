@@ -371,6 +371,12 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   단어의 개수
+    public static void Baek1152()
+    {
+        var input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        Console.WriteLine(input.Length);
+    }
     // II   오르막
     public static void Baek14910()
     {
@@ -1500,6 +1506,86 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    A+B - 9
+    public static void Baek15740_Cpp()
+    {
+        var input = Console.ReadLine().Split();
+        string a = input[0];
+        string b = input[1];
+
+        bool aIsNegative = a[0] == '-';
+        bool bIsNegative = b[0] == '-';
+
+        string aABS = aIsNegative ? a.Substring(1) : a;
+        string bABS = bIsNegative ? b.Substring(1) : b;
+
+        int length = Math.Max(aABS.Length, bABS.Length);
+        aABS = aABS.PadLeft(length, '0');
+        bABS = bABS.PadLeft(length, '0');
+
+        if (aIsNegative == bIsNegative)
+        {   // string숫자 덧셈 로직
+            int carry = 0;
+            for (int i = length - 1; i >= 0; --i)
+            {
+                int sum = aABS[i] + bABS[i] - '0' * 2 + carry;
+                carry = sum / 10;
+                sb.Insert(0, sum % 10);
+            }
+            if (carry > 0) sb.Insert(0, 1);
+            if (aIsNegative) sb.Insert(0, '-');
+        }
+        else    // string숫자 뺄셈 로직
+        {
+            int compare = aABS.CompareTo(bABS);
+            if (0 == compare)
+            {   // 값이 같은 뺄셈일경우 무조건 0
+                Console.WriteLine("0");
+                return;
+            }
+
+            bool aIsLarger = compare > 0;
+            string larger = aIsLarger ? aABS : bABS;
+            string smaller = aIsLarger ? bABS : aABS;
+            bool resultIsNegative = aIsLarger ? aIsNegative : bIsNegative;
+
+            int borrow = 0;
+            for (int i = length - 1; i >= 0; --i)
+            {
+                int diff = larger[i] - smaller[i] - borrow;
+
+                if (diff < 0)
+                {
+                    diff += 10;
+                    borrow = 1;
+                }
+                else
+                    borrow = 0;
+                sb.Insert(0, diff);
+            }
+
+            while (sb.Length > 1 && sb[0] == '0')
+                sb.Remove(0, 1);
+
+            if (resultIsNegative) sb.Insert(0, '-');
+        }
+        Console.WriteLine(sb);
+    }
+    public static void Baek15740()
+    {   // int : 40점 / long : 75점 / 
+        var input = Array.ConvertAll(Console.ReadLine().Split(), BigInteger.Parse);
+        Console.WriteLine(input[0] + input[1]);
+    }
+    // V    크냐?
+    public static void Baek4101()
+    {
+        while (true)
+        {
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            if (0 == input[0] && 0 == input[1]) return;
+            Console.WriteLine(input[0] > input[1] ? "YES" : "NO");
+        }
+    }
     // V    라면 공식
     public static void Baek30007()
     {

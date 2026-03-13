@@ -3,6 +3,8 @@ using System.Text.RegularExpressions;
 
 class Cs_Basic
 {
+
+
     // [Dictionary]
     public static void UseDictionary()
     {

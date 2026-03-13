@@ -1,11 +1,4 @@
-﻿using System;
-using System.ComponentModel;
-using System.IO.MemoryMappedFiles;
-using System.Runtime.CompilerServices;
-using System.Runtime.Intrinsics.Arm;
-using System.Security.Cryptography;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
+﻿using System.Text;
 
 class Baek_1Silver
 {
@@ -21,6 +14,35 @@ class Baek_1Silver
 
     #region Silver I
 
+    // I    포도주 시식 (Need Again)
+    public static void Baek2156()
+    {
+        // 연속 2번까지만 허용 / 최댓값 구하기
+        FastReader fr = new FastReader();
+        int n = fr.NextInt();
+        int[] wine = new int[n + 1];
+        int[] dp = new int[n + 1];
+        for (int i = 1; i < n + 1; ++i)
+            wine[i] = fr.NextInt();
+
+        // dp 초기값 저장.
+        if (n > 0) dp[1] = wine[1];
+        if (n > 1) dp[2] = wine[1] + wine[2];
+
+        for (int i = 3; i < n + 1; ++i)
+        {   // 경우의수 3가지를 구한다. -> 경우의수중 가장 큰값을 저장하자.
+            // 이번잔은 안마실때.
+            int skip = dp[i - 1];
+            // 이번잔은 마시고, 전전잔을 마실때.
+            int drinkOne = dp[i - 2] + wine[i];
+            // 이번잔을 마시고 앞잔을 마실때. (연속 두잔을 마셨기 때문에 전전전잔을 가져옴.)
+            int drinkTwo = dp[i - 3] + wine[i - 1] + wine[i];
+
+            dp[i] = Math.Max(skip, Math.Max(drinkOne, drinkTwo));
+        }
+
+        Console.WriteLine(dp[n]);
+    }
     // I    스티커
     public static void Baek9465()
     {
@@ -369,6 +391,26 @@ class Baek_1Silver
 
     #region Silver II
 
+    // II   가장 큰 증가하는 부분 수열
+    public static void Baek11055()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int[] dp = new int[n + 1];
+        int max = 0;
+
+        for (int i = 0; i < n; ++i)
+        {
+            dp[i] = A[i];   // 일단 자기 자신의 값을 마지막으로 저장할 경우의 최댓값DP이므로 자기자신값을 넣음.
+            for (int j = 0; j < i; ++j)
+            {   // 자기 앞의 수열중 작은 수들만 고른다.
+                if (A[i] > A[j])
+                    dp[i] = Math.Max(dp[j] + A[i], dp[i]);  // 해당 값을 더할때와 아닐때의 경우중 큰 값을 저장.
+            }
+            max = Math.Max(max, dp[i]); // 최댓값 저장.
+        }
+        Console.WriteLine(max);
+    }
     // II   1, 2, 3 더하기 3
     public static void Baek15988()
     {
