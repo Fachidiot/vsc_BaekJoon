@@ -3,7 +3,38 @@ using System.Text.RegularExpressions;
 
 class Cs_Basic
 {
+    // [Data Structure]
+    public static void DataStructure()
+    {
+        var numbers = Enumerable.Range(1, 1000).ToArray();
+        int count = default;
+        // 기존 Algorithm
+        foreach (var num in numbers)
+        {
+            if (num % 13 == 0)
+                ++count;
+        }
+        // SQL 방식
+        count = Enumerable.Range(1, 1000).Count(n => n % 13 == 0);
 
+        Console.WriteLine($"1 ~ 1000까지의 수중 13의 배수의 수는 {count}");
+
+        numbers = [100, 75, 50, 37, 90, 95];
+        int sum = default;
+        // 기존 Algorithm
+        foreach (var num in numbers)
+        {
+            if (num >= 80)
+                sum += num;
+        }
+        // SQL 방식
+        sum = (new int[] { 100, 75, 50, 37, 90, 95 }).Where(n => n >= 80).Sum();
+
+        Console.WriteLine($"80점 이상인 사람의 총점 {sum}");
+
+        numbers = [10, 20, 30, 40, 50];
+        numbers.Where(n => n <= 20).ToList().ForEach(n => Console.WriteLine(n));
+    }
 
     // [Dictionary]
     public static void UseDictionary()
