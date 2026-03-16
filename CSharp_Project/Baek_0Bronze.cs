@@ -1506,6 +1506,16 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    피갤컵
+    public static void Baek33612()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        int month = 7 * n % 12 + 1;
+        int year = 2024 + (n * 7 / 12);
+
+        Console.WriteLine($"{year} {month}");
+    }
     // V    A+B - 9
     public static void Baek15740_Cpp()
     {
