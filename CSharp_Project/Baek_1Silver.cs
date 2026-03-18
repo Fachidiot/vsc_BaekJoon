@@ -391,6 +391,110 @@ class Baek_1Silver
 
     #region Silver II
 
+    // II   사탕 게임
+    public static void Baek3085()
+    {
+        /*
+        CCP -> CPC / CCP
+        CCP -> CPC / CCP
+        PPC -> PPC / PCP
+        */
+        int n = int.Parse(Console.ReadLine());
+        char[,] board = new char[n, n];
+        for (int i = 0; i < n; ++i)
+        {
+            string input = Console.ReadLine();
+            for (int j = 0; j < n; ++j)
+                board[i, j] = input[j];
+        }
+        int max = 1;
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                if (j + 1 < n)
+                {   // 오른쪽과 바꿔보기
+                    char temp = board[i, j];
+                    board[i, j] = board[i, j + 1];
+                    board[i, j + 1] = temp;
+
+                    max = Math.Max(max, Check_3085(board, i, j));
+                    max = Math.Max(max, Check_3085(board, i, j + 1));
+
+                    // 원상복구
+                    temp = board[i, j];
+                    board[i, j] = board[i, j + 1];
+                    board[i, j + 1] = temp;
+                }
+                if (i + 1 < n)
+                {   // 아래와 바꿔보기
+                    char temp = board[i, j];
+                    board[i, j] = board[i + 1, j];
+                    board[i + 1, j] = temp;
+
+                    max = Math.Max(max, Check_3085(board, i, j));
+                    max = Math.Max(max, Check_3085(board, i + 1, j));
+
+                    // 원상복구
+                    temp = board[i, j];
+                    board[i, j] = board[i + 1, j];
+                    board[i + 1, j] = temp;
+                }
+            }
+        }
+        Console.WriteLine(max);
+    }
+    private static int Check_3085(char[,] board, int x, int y)
+    {
+        int count = 1, max = 1;
+        for (int i = 0; i < board.GetLength(0); ++i)
+        {
+            if (board[i, y] == board[x, y])
+                count++;
+            else
+            {
+                max = Math.Max(max, count);
+                count = 1;
+            }
+        }
+        max = Math.Max(max, count);
+
+        count = 1;
+        for (int j = 0; j < board.GetLength(1); ++j)
+        {
+            if (board[x, j] == board[x, y])
+                count++;
+            else
+            {
+                max = Math.Max(max, count);
+                count = 1;
+            }
+        }
+        max = Math.Max(max, count);
+
+        return max;
+    }
+    // II   가장 긴 감소하는 부분 수열
+    public static void Baek11722()
+    {
+        int n = int.Parse(Console.ReadLine());
+        int[] dp = new int[n + 1];
+        int[] A = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+
+        int max = 1;
+        for (int i = 0; i < n; ++i)
+        {
+            dp[i] = 1;
+            for (int j = 0; j < i; ++j)
+            {
+                if (A[i] < A[j])
+                    dp[i] = Math.Max(dp[j] + 1, dp[i]);
+            }
+            max = Math.Max(max, dp[i]);
+        }
+        Console.WriteLine(max);
+
+    }
     // II   가장 큰 증가하는 부분 수열
     public static void Baek11055()
     {
