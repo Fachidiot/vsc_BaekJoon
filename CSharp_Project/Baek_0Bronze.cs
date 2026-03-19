@@ -374,8 +374,19 @@ class Baek_0Bronze
     // II   단어의 개수
     public static void Baek1152()
     {
-        var input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-        Console.WriteLine(input.Length);
+        // var input = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+        // Console.WriteLine(input.Length);
+    }
+    public static void Baek1152_Raw()
+    {
+        var input = Console.ReadLine().Split();
+        int count = 0;
+        foreach (var str in input)
+        {
+            if (!string.IsNullOrEmpty(str))
+                ++count;
+        }
+        Console.WriteLine(count);
     }
     // II   오르막
     public static void Baek14910()
