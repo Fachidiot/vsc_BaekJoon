@@ -1517,6 +1517,17 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    성택이의 은밀한 비밀번호
+    public static void Baek25372()
+    {
+        int N = int.Parse(Console.ReadLine());
+        while (N-- > 0)
+        {
+            var password = Console.ReadLine();
+            sb.AppendLine(6 <= password.Length && password.Length <= 9 ? "yes" : "no");
+        }
+        Console.WriteLine(sb);
+    }
     // V    피갤컵
     public static void Baek33612()
     {
