@@ -1517,6 +1517,31 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    Pyramids
+    public static void Baek5341()
+    {
+        while (true)
+        {
+            var input = int.Parse(Console.ReadLine());
+            if (input == 0) return;
+            int sum = 0;
+            for (int i = input; i > 0; --i)
+                sum += i;
+            Console.WriteLine(sum);
+        }
+    }
+    // V    Site Score
+    public static void Baek20254()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int Ur = input[0], Tr = input[1], Uo = input[2], To = input[3];
+        Console.WriteLine(Ur * 56 + Tr * 24 + Uo * 14 + To * 6);
+    }
+    // V    The World Responds
+    public static void Baek23234()
+    {
+        Console.WriteLine("The world says hello!");
+    }
     // V    성택이의 은밀한 비밀번호
     public static void Baek25372()
     {
