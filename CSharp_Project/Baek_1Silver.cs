@@ -1796,6 +1796,26 @@ class Baek_1Silver
 
     #region Silver V
 
+    // V    날짜 계산
+    public static void Baek1476()
+    {
+        var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+        int E = input[0], S = input[1], M = input[2], year = 0;
+        int e = 0, s = 0, m = 0;
+
+        while (true)
+        {
+            ++year;
+            e = e % 15 + 1;
+            s = s % 28 + 1;
+            m = m % 19 + 1;
+
+            if (e == E && s == S && m == M)
+                break;
+        }
+
+        Console.WriteLine(year);
+    }
     // V    색종이
     public static void Baek2563()
     {
