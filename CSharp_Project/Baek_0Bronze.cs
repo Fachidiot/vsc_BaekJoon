@@ -859,6 +859,28 @@ class Baek_0Bronze
 
     #region Bronze III
 
+    // III  별 찍기 - 7
+    public static void Baek2444()
+    {
+        int n = int.Parse(Console.ReadLine());
+
+        for (int i = 0; i < n; ++i)
+        {
+            for (int j = n; j > i + 1; --i) // 공백 출력
+                Console.Write(" ");
+            for (int j = 0; j < i * 2 + 1; ++j) // 별 출력
+                Console.Write("*");
+            Console.WriteLine();
+        }
+        for (int i = 0; i < n - 1; ++i) // 위의 정삼각형에서 그린 긴변 1개 빼기
+        {
+            for (int j = 0; j < i + 1; ++i) // 공백 출력
+                Console.Write(" ");
+            for (int j = (n - 1) * 2; j < i * 2 + 1; --j) // 별 출력
+                Console.Write("*");
+            Console.WriteLine();
+        }
+    }
     // III  팰린드롬인지 확인하기
     public static void Baek10988()
     {
@@ -1517,6 +1539,15 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    킹, 퀸, 룩, 비숍, 나이트, 폰
+    public static void Baek3003()
+    {
+        int[] pieces = [1, 1, 2, 2, 2, 8];
+        var input = Console.ReadLine().Split();
+
+        for (int i = 0; i < 6; ++i)
+            Console.Write(pieces[i] - int.Parse(input[i]) + " ");
+    }
     // V    공통교육과정
     public static void Baek34813()
     {
