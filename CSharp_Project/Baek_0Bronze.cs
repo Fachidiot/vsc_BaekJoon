@@ -1517,6 +1517,17 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    공통교육과정
+    public static void Baek34813()
+    {
+        Dictionary<char, string> classes = new Dictionary<char, string>();
+        classes['F'] = "Foundation";
+        classes['C'] = "Claves";
+        classes['V'] = "Veritas";
+        classes['E'] = "Exploration";
+        var input = Console.ReadLine();
+        Console.WriteLine(classes[input[0]]);
+    }
     // V    Pyramids
     public static void Baek5341()
     {
