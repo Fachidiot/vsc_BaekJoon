@@ -5,6 +5,45 @@ using System.Text.RegularExpressions;
 
 class Cs_Basic
 {
+    // [메서드의 매개변수 종류]
+    static void Do(int num) => Console.WriteLine(num);  // 값 전달 방식
+    static void Do(ref int num) { num = 20; Console.WriteLine(num); }   // 참조 전달 방식(ref)
+    static void DoOut(out int num) { num = 30; Console.WriteLine(num); }    // 반환형 전달 방식(out)
+    static void SumAll(params int[] numbers) { int sum = 0; foreach (int num in numbers) sum += num; Console.WriteLine(sum); }  // 가변형 전달 방식(params)
+    public static void Method_Params()
+    {
+        int num = 10;
+        Do(num);        // 10
+        Do(ref num);    // 20
+        DoOut(out num); // 30
+        SumAll(1, 2, 3);    // 6
+        SumAll(4, 5, 6);    // 15
+        SumAll(7, 8, 9);    // 24
+
+        DateTime dt;
+        if (DateTime.TryParse("2020-01-01", out dt))
+            Console.WriteLine(dt);
+        else
+            Console.WriteLine("Cant convert");
+
+        if (DateTime.TryParse("2020-01-01", out var dt2))
+            Console.WriteLine(dt2);
+    }
+
+    // [Class 의 ToString Override ]
+    class ClassTest()
+    {
+        public override string ToString()
+        {
+            return "ClassTest입니다.";
+        }
+    }
+    public static void ClassOverrideToString()
+    {
+        ClassTest ct = new ClassTest();
+        Console.WriteLine(ct);  // "ClassTest" 대신 "ClassTest입니다." 출력
+    }
+
     #region LINQ 알고리즘 사용법
     class Record
     {
