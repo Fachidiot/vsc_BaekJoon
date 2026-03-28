@@ -1539,6 +1539,32 @@ class Baek_0Bronze
 
     #region Bronze V
 
+    // V    UOS 문자열
+    public static void Baek32929()
+    {   // [ 1 : U , 2 : O , 3 : S ]
+        string arr = "SUO"; // 0부터 시작, 3으로 나머지를 구할때 3 == 0
+        int x = int.Parse(Console.ReadLine());
+
+        Console.WriteLine(arr[x % 3]);
+    }
+    // V    문자열 반복
+    public static void Baek2675()
+    {
+        int T = int.Parse(Console.ReadLine());
+        while (T-- > 0)
+        {
+            var input = Console.ReadLine().Split();
+            int R = int.Parse(input[0]);
+            string S = input[1];
+            for (int i = 0; i < S.Length; ++i)
+            {
+                for (int j = 0; j < R; ++j)
+                    sb.Append(S[i]);
+            }
+            Console.WriteLine(sb);
+            sb.Clear();
+        }
+    }
     // V    킹, 퀸, 룩, 비숍, 나이트, 폰
     public static void Baek3003()
     {
