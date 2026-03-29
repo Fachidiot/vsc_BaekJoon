@@ -371,6 +371,24 @@ class Baek_0Bronze
 
     #region Bronze II
 
+    // II   주차의 신
+    public static void Baek5054()
+    {
+        int t = int.Parse(Console.ReadLine());
+        while (t-- > 0)
+        {
+            int n = int.Parse(Console.ReadLine());
+            var input = Array.ConvertAll(Console.ReadLine().Split(), int.Parse);
+            int min = 99, max = 0;
+            foreach (var p in input)
+            {
+                min = Math.Min(p, min);
+                max = Math.Max(p, max);
+            }
+            sb.AppendLine(((max - min) * 2).ToString());
+        }
+        Console.WriteLine(sb);
+    }
     // II   단어의 개수
     public static void Baek1152()
     {
